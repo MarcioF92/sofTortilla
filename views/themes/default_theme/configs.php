@@ -6,7 +6,9 @@ function get_layout_positions(){
 		'top' => array(),
 		'sidebar' => array(),
 		'footer' => array(),
-		'bottom' => array()
+		'bottom' => array(),
+		'sidebar2' => array(),
+		'content' => array()
 	);
 }
 

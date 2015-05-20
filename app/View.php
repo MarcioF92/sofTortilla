@@ -15,6 +15,7 @@ class View extends Smarty
     private $_theme;
     private static $_item;
     private $_widget;
+    private $_menues;
     private $_registry;
     private $_db;
  
@@ -103,6 +104,7 @@ class View extends Smarty
         }
 
         $this->assign('widgets', $this->getWidgets());
+        $this->assign('menues', $this->getMenues());
         $this->assign('_acl', $this->_acl);
         $this->assign('_layoutParams', $_params);
 
@@ -243,6 +245,51 @@ class View extends Smarty
         //print_r($positions);
 
         return $positions;
+    }
+
+    public function getMenues(){
+        //Llama a los menues con sus respectivas configuraciones
+        $menues_result = $this->_db->query("SELECT * FROM menues");
+        $menues_result_array = $menues_result->fetchall(PDO::FETCH_ASSOC);
+        $menues = array();
+        foreach ($menues_result_array as $m) {
+            $menues[$m['idmenu']] = array( 
+                                        'nombre' => $m['nombre'],
+                                        'config' => array(
+                                            'position' => $m['position'], 
+                                            'habilitado' => $m['habilitado']),
+                                        'content' => $this->getMenuItems($m['idmenu'], $m['position'])
+                                        );
+        }
+
+        $positions = $this->getLayoutPositions();
+
+        foreach ($menues as $menu) {
+            if(isset($positions[$menu['config']['position']])){
+                if ($menu['config']['habilitado']) {
+                    $pos = $menu['config']['position'];
+                    $positions[$pos][] = $menu['content'];
+                }
+            }
+        }
+
+        return $positions;
+
+    }
+
+    public function getMenuItems($idmenu, $vista){
+        $items = $this->_db->query("SELECT * FROM menu_items WHERE idmenu = $idmenu")->fetchall(PDO::FETCH_ASSOC);
+        if(is_readable(ROOT . 'views' . DS . 'themes' . DS . $this->_theme . DS . 'menues' . DS . $vista . '.php')){
+            ob_start();
+            extract($items);
+            include ROOT . 'views' . DS . 'themes' . DS . $this->_theme . DS . 'menues' . DS . $vista . '.php';
+            $content = ob_get_contents();
+            ob_end_clean();
+
+            return $content;
+        }
+
+        throw new Exception("Error de la vista del menu");
     }
 
     public function getWidgetContent(array $content){
