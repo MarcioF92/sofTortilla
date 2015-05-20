@@ -1,0 +1,24 @@
+<h2>Prueba Post</h2>
+
+<?php if(isset($this->posts)) { ?>
+
+<table>
+
+<?php for ($i=0; $i < count($this->posts); $i++) { ?>
+	<tr>
+		<td><?php echo $this->posts[$i]['idprueba']; ?></td>
+		<td><?php echo $this->posts[$i]['nom']; ?></td>
+	</tr>
+<?php } ?>
+
+</table>
+
+<?php } else { ?>
+
+	<p>No hay posts</p>
+
+<?php } ?>
+
+<br>
+
+<?php if(isset($this->paginacion)) echo $this->paginacion; ?>

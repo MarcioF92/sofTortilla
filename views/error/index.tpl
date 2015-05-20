@@ -1,0 +1,1 @@
+<h2>Ha ocurrido un error</h2>

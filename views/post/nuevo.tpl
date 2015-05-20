@@ -1,0 +1,13 @@
+<form id="form1" method="post" action="" enctype="multipart/form-data">
+
+	<input name="guardar" type="hidden" value="1" />
+	<p>Título: <br>
+	<input type="text" name="titulo" value="{if isset($datos.titulo)} {$datos.titulo} {/if}" /></p>
+
+	<p>Cuerpo: <br>
+	<textarea type="text" name="cuerpo">{if isset($datos.cuerpo)} {$datos.cuerpo} {/if} </textarea></p>
+
+	<input type="file" name="imagen" />
+
+	<input type="submit" value="Guardar" />
+</form>
