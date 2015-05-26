@@ -278,10 +278,39 @@ class View extends Smarty
     }
 
     public function getMenuItems($idmenu, $vista){
-        $items = $this->_db->query("SELECT * FROM menu_items WHERE idmenu = $idmenu")->fetchall(PDO::FETCH_ASSOC);
+        $items = $this->_db->query("SELECT * FROM menu_items WHERE idmenu = '$idmenu' AND idpadre = '0'")->fetchall(PDO::FETCH_ASSOC);
+        $items_final = array();
+        foreach ($items as $item) {
+            $tiene_subitems = $this->_db->query("SELECT COUNT(*) AS cantidad FROM menu_items WHERE idmenu = '$idmenu' AND idpadre = '" . $item['idmenuitem'] . "'")->fetchall(PDO::FETCH_ASSOC);
+            $cantidad = intval($tiene_subitems[0]['cantidad']);
+            if($cantidad >= 1){
+                $items_final[$item['idmenuitem']] = array(
+                        array(
+                        'id' => $item['idmenuitem'],
+                        'titulo' =>  $item['label'],
+                        'enlace' => $item['information'] 
+                        )
+                    );
+                $subitems = $this->_db->query("SELECT * FROM menu_items WHERE idmenu = $idmenu AND idpadre = '" . $item['idmenuitem'] . "'")->fetchall(PDO::FETCH_ASSOC);
+                foreach ($subitems as $subitem) {
+                    $items_final[$item['idmenuitem']][] = array(
+                                                            'id' => $subitem['idmenuitem'],
+                                                            'titulo' =>  $subitem['label'],
+                                                            'enlace' => $subitem['information'] 
+                                                            );
+                }
+            } else {
+                $items_final[$item['idmenuitem']] = array(
+                                                    'id' => $item['idmenuitem'],
+                                                    'titulo' =>  $item['label'],
+                                                    'enlace' => $item['information'] 
+                                                    );
+            }
+        }
+
         if(is_readable(ROOT . 'views' . DS . 'themes' . DS . $this->_theme . DS . 'menues' . DS . $vista . '.php')){
             ob_start();
-            extract($items);
+            extract($items_final);
             include ROOT . 'views' . DS . 'themes' . DS . $this->_theme . DS . 'menues' . DS . $vista . '.php';
             $content = ob_get_contents();
             ob_end_clean();
