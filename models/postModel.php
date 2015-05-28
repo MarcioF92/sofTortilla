@@ -7,17 +7,30 @@ class postModel extends Model{
 	}
 
 	public function getPosts(){
-		$post = $this->_db->query("SELECT * FROM posts");
-		return $post->fetchall();
+		$posts = $this->_db->query("SELECT v.*, p.* FROM posts_versions v INNER JOIN posts p ON v.idpost = p.idpost WHERE v.show = 1");
+		return $posts->fetchall(PDO::FETCH_ASSOC);
 	}
 
-	public function getUnPost($id){
-		$id = (int) $id;
-		$post = $this->_db->query("SELECT * FROM posts WHERE idpost = $id");
-		return $post->fetchall();
+	public function getPost($url){
+		$post = $this->_db->query("SELECT v.*, p.* FROM posts_versions v INNER JOIN posts p ON v.idpost = p.idpost WHERE p.short_url = '$url'");
+		return $post->fetch(PDO::FETCH_ASSOC);
 	}
 
-	public function insertarPost($titulo, $cuerpo, $imagen){
+	public function getContent($url){
+		$post = $this->_db->query("SELECT v.content FROM posts_versions v INNER JOIN posts p ON v.idpost = p.idpost WHERE p.idpost = '$idpost' AND v.show = 1");
+		return $post->fetch();
+	}
+
+	public function existPost($url){
+		$post = $this->_db->query("SELECT COUNT(*) AS cantidad FROM posts WHERE name = '$url' AND enable = 1")->fetch();
+		if(intval($post['cantidad']) > 0){
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/*public function insertarPost($titulo, $cuerpo, $imagen){
 		$this->_db->prepare("INSERT INTO posts (titulo,cuerpo,imagen) values (:titulo, :cuerpo, :imagen)")
 				->execute(array(
 					':titulo' => $titulo, 
@@ -34,7 +47,7 @@ class postModel extends Model{
 					':titulo' => $titulo, 
 					':cuerpo' => $cuerpo
 					));
-	}
+	}*/
 
 	public function eliminarPost($id){
 		$id = (int) $id;

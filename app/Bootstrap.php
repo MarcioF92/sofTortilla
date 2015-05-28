@@ -27,6 +27,10 @@ class Bootstrap
 
 		if(is_readable($rutaControlador)){ // Verifica si el archivo existe y si es válido
 			require_once $rutaControlador;
+		} else {
+			$controller = 'indexController';
+			require_once ROOT . 'controllers' . DS . 'indexController.php'; // Sino se encuentra, sale excepción
+		}
 
 			$controller = new $controller;
 
@@ -44,9 +48,7 @@ class Bootstrap
 			} else {
 				call_user_func(array($controller, $metodo)); // Si no hay, manda solo el controlador y el método
 			}
-		} else {
-			throw new Exception('No encontrado'); // Sino se encuentra, sale excepción
-		}
+		
 	}
 }
 

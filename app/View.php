@@ -53,7 +53,7 @@ class View extends Smarty
         return self::$_item;
     }
  
-    public function render($vista, $item = false, $noLayout = false) // La llamada a las vistas, recibe la vista como parámetro para su controlador, dibuja la vista
+    public function render($vista = false, $item = false, $noLayout = false) // La llamada a las vistas, recibe la vista como parámetro para su controlador, dibuja la vista
     {
 
         if ($item) {
@@ -89,18 +89,20 @@ class View extends Smarty
         );
 
          // La ruta al View del controlador $this->_rutas['view'] . $vista . '.tpl';
-         
-        if(is_readable($this->_rutas['view'] . $vista . '.tpl')){
-            if($noLayout){
-                $this->template_dir = $this->_rutas['view'];
-                $this->display($this->_rutas['view'] . $vista . '.tpl');
-                exit;
-            }
+        
+        if($vista){
+            if(is_readable($this->_rutas['view'] . $vista . '.tpl')){
+                if($noLayout){
+                    $this->template_dir = $this->_rutas['view'];
+                    $this->display($this->_rutas['view'] . $vista . '.tpl');
+                    exit;
+                }
 
-            $this->assign('_contenido', $this->_rutas['view'] . $vista . '.tpl');
-        } 
-        else {
-            throw new Exception('Error de vista');
+                $this->assign('_contenido', $this->_rutas['view'] . $vista . '.tpl');
+            } 
+            else {
+                throw new Exception('Error de vista');
+            }
         }
 
         $this->assign('widgets', $this->getWidgets());

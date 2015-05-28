@@ -2,7 +2,7 @@
 Template Name: Posts/Pages
 -->
 
-{include file="header.tpl"}
+{include file="post_header.tpl"}
 
           <div class="row">
      
@@ -20,7 +20,9 @@ Template Name: Posts/Pages
                     <div id="mensaje">{$_mensaje}</div>
                     {/if}
 
-                    {$content}
+                    <div class="title"><h2>{$post.title}</h2></div>
+
+                    {$post.content}
                     
                 </article>
             </div>

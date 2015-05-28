@@ -19,6 +19,12 @@ class errorController extends Controller
         $this->_view->render('access', 'error');
     }
 
+    public function not_found(){
+        $this->_view->assign('titulo', 'Error');
+        $this->_view->assign('_error', "Página o controlador no encontrado");
+        $this->_view->render('access', 'error');
+    }
+
     private function _getError($codigo = false){
         if ($codigo) {
             $codigo = $this->filtrarInt($codigo);
