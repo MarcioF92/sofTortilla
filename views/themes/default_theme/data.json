@@ -1,0 +1,11 @@
+{ 
+	"ThemeDescription": {
+		"information": {
+			"nombre": "Default Themes - Foundation",
+			"carpeta": "default_theme",
+			"autor": "Marcio Fuentes",
+			"descripcion": "Theme por defecto de SofTortilla Framework",
+			"version": "1.0"
+		}
+	}
+}

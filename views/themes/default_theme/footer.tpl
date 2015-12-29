@@ -1,4 +1,6 @@
-            <footer class="row">
+        </div> <!-- Content -->
+
+        <footer class="row">
             <div class="large-12 columns">
               <hr/>
               <div class="row">
@@ -7,7 +9,7 @@
                 </div>
               </div>
             </div>
-          </footer>
+         </footer>
 
         <!-- javascript -->
         <script type="text/javascript">

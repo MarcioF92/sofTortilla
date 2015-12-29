@@ -1,5 +1,3 @@
-<h2>Widgets</h2>
-
 {if isset($wids) && count($wids)}
 
 

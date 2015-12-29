@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.8, created on 2015-05-20 03:33:09
+<?php /* Smarty version Smarty-3.1.8, created on 2015-06-07 01:08:17
          compiled from "D:\Marcio\Programas\xampp_1_8\htdocs\Frameworks\flight_editado\views\themes\default_theme\footer.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:29454555be4556c9857-80234531%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '0600f6bad78e7b25ea3cd027b2ee283b6d2bdf76' => 
     array (
       0 => 'D:\\Marcio\\Programas\\xampp_1_8\\htdocs\\Frameworks\\flight_editado\\views\\themes\\default_theme\\footer.tpl',
-      1 => 1432085330,
+      1 => 1433632082,
       2 => 'file',
     ),
   ),
@@ -15,6 +15,8 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   'function' => 
   array (
   ),
+  'version' => 'Smarty-3.1.8',
+  'unifunc' => 'content_555be4556f13d3_23010103',
   'variables' => 
   array (
     '_layoutParams' => 0,
@@ -22,10 +24,10 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'js' => 0,
   ),
   'has_nocache_code' => false,
-  'version' => 'Smarty-3.1.8',
-  'unifunc' => 'content_555be4556f13d3_23010103',
 ),false); /*/%%SmartyHeaderCode%%*/?>
-<?php if ($_valid && !is_callable('content_555be4556f13d3_23010103')) {function content_555be4556f13d3_23010103($_smarty_tpl) {?>            <footer class="row">
+<?php if ($_valid && !is_callable('content_555be4556f13d3_23010103')) {function content_555be4556f13d3_23010103($_smarty_tpl) {?>        </div> <!-- Content -->
+
+        <footer class="row">
             <div class="large-12 columns">
               <hr/>
               <div class="row">
@@ -35,7 +37,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
                 </div>
               </div>
             </div>
-          </footer>
+         </footer>
 
         <!-- javascript -->
         <script type="text/javascript">

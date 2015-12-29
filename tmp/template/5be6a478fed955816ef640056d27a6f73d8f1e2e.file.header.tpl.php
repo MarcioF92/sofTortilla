@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.8, created on 2015-05-20 23:40:56
+<?php /* Smarty version Smarty-3.1.8, created on 2015-06-07 01:13:00
          compiled from "D:\Marcio\Programas\xampp_1_8\htdocs\Frameworks\flight_editado\views\themes\default_theme\header.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:17936555be455661074-81260867%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '5be6a478fed955816ef640056d27a6f73d8f1e2e' => 
     array (
       0 => 'D:\\Marcio\\Programas\\xampp_1_8\\htdocs\\Frameworks\\flight_editado\\views\\themes\\default_theme\\header.tpl',
-      1 => 1432158050,
+      1 => 1433632372,
       2 => 'file',
     ),
   ),
@@ -25,6 +25,8 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'widgets' => 0,
     'tp' => 0,
     'menues' => 0,
+    '_error' => 0,
+    '_mensaje' => 0,
   ),
   'has_nocache_code' => false,
 ),false); /*/%%SmartyHeaderCode%%*/?>
@@ -43,10 +45,6 @@ normalize.css" rel="stylesheet" type="text/css" />
 foundation.css" rel="stylesheet" type="text/css" />
         <script src="<?php echo $_smarty_tpl->tpl_vars['_layoutParams']->value['ruta_js'];?>
 vendor/modernizr.js" type="text/javascript"></script>
-        <script src="<?php echo $_smarty_tpl->tpl_vars['_layoutParams']->value['ruta_js'];?>
-tinymce/tinymce.min.js" type="text/javascript"></script>
-        <script src="<?php echo $_smarty_tpl->tpl_vars['_layoutParams']->value['ruta_js'];?>
-tiny.js" type="text/javascript"></script>
         <script src="<?php echo $_smarty_tpl->tpl_vars['_layoutParams']->value['root'];?>
 public/js/jquery.js" type="text/javascript"></script>
 
@@ -98,4 +96,31 @@ $_smarty_tpl->tpl_vars['tp']->_loop = true;
                 </ul>
               </section>
             </nav>
+        </div>
+
+        <div class="row">
+     
+            <div class="large-9 columns" role="content">
+         
+                <article>
+
+                    <noscript><p>Para el correcto funcionamiento debe tener el soporte de javascript habilitado</p></noscript>
+                    
+                    <?php if (isset($_smarty_tpl->tpl_vars['_error']->value)){?>
+                    <div id="error"><?php echo $_smarty_tpl->tpl_vars['_error']->value;?>
+</div>
+                    <?php }?>
+
+                    <?php if (isset($_smarty_tpl->tpl_vars['_mensaje']->value)){?>
+                    <div id="mensaje"><?php echo $_smarty_tpl->tpl_vars['_mensaje']->value;?>
+</div>
+                    <?php }?>
+
+                    <h2><?php echo $_smarty_tpl->tpl_vars['titulo']->value;?>
+</h2>
+
+                </article>
+
+            </div>
+
         </div><?php }} ?>

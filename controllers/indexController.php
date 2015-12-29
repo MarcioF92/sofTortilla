@@ -30,7 +30,7 @@ class indexController extends Controller
         if($bandera){
         	$post = $this->_postsModel->getPost($final_url);
 			$this->_view->assign('post', $post);
-	        $this->_view->render(); //Renderiza y manda el nombre de la vista
+	        $this->_view->render("", $post['idpost']); //Renderiza y manda el nombre de la vista
         } else {
         	$this->redireccionar('error/not_found');
         }	

@@ -9,8 +9,6 @@
         <link href="{$_layoutParams.ruta_css}normalize.css" rel="stylesheet" type="text/css" />
         <link href="{$_layoutParams.ruta_css}foundation.css" rel="stylesheet" type="text/css" />
         <script src="{$_layoutParams.ruta_js}vendor/modernizr.js" type="text/javascript"></script>
-        <script src="{$_layoutParams.ruta_js}tinymce/tinymce.min.js" type="text/javascript"></script>
-        <script src="{$_layoutParams.ruta_js}tiny.js" type="text/javascript"></script>
         <script src="{$_layoutParams.root}public/js/jquery.js" type="text/javascript"></script>
 
         {if isset($_layoutParams.js) && count($_layoutParams.js)}
@@ -45,4 +43,28 @@
                 </ul>
               </section>
             </nav>
+        </div>
+
+        <div class="row">
+     
+            <div class="large-9 columns" role="content">
+         
+                <article>
+
+                    <noscript><p>Para el correcto funcionamiento debe tener el soporte de javascript habilitado</p></noscript>
+                    
+                    {if isset($_error)}
+                    <div id="error">{$_error}</div>
+                    {/if}
+
+                    {if isset($_mensaje)}
+                    <div id="mensaje">{$_mensaje}</div>
+                    {/if}
+
+                    <h2>{$titulo}</h2>
+
+                </article>
+
+            </div>
+
         </div>

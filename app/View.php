@@ -35,8 +35,6 @@ class View extends Smarty
 
         self::$_item = null;
 
-
-
         $modulo = $this->_request->getModulo();
         $controlador = $this->_request->getControlador();
 
@@ -244,8 +242,6 @@ class View extends Smarty
             }
         }
 
-        //print_r($positions);
-
         return $positions;
     }
 
@@ -255,22 +251,45 @@ class View extends Smarty
         $menues_result_array = $menues_result->fetchall(PDO::FETCH_ASSOC);
         $menues = array();
         foreach ($menues_result_array as $m) {
+            $show_hide = $this->getMenuConfig($m['idmenu']);
             $menues[$m['idmenu']] = array( 
                                         'nombre' => $m['nombre'],
                                         'config' => array(
                                             'position' => $m['position'], 
-                                            'habilitado' => $m['habilitado']),
+                                            'habilitado' => $m['habilitado'],
+                                            'show' => $show_hide['show'],
+                                            'hide' => $show_hide['hide']),
+
                                         'content' => $this->getMenuItems($m['idmenu'], $m['position'])
                                         );
         }
 
         $positions = $this->getLayoutPositions();
 
-        foreach ($menues as $menu) {
+        /*foreach ($menues as $menu) {
             if(isset($positions[$menu['config']['position']])){
                 if ($menu['config']['habilitado']) {
                     $pos = $menu['config']['position'];
                     $positions[$pos][] = $menu['content'];
+                }
+            }
+        }*/
+
+        foreach ($menues as $menu) {
+            // Verificar si la pos del widget está presente //
+            if (isset($positions[$menu['config']['position']])) {
+                // Verificar si widget está inhabilitado para esa vista //
+                if (!isset($menu['config']['hide']) || !in_array(self::$_item, $menu['config']['hide'])) {
+                    // Verificar si widget está habilitado para esa vista //
+                    if ($menu['config']['show'][0]['menu_show'] == 'all' || in_array(self::$_item, $menu['config']['show'][0])) {
+                        if ($menu['config']['habilitado'] == 1) {               
+                            // Llenar la posición del Layout //
+                            $contenido = $menu['content'];
+                            $pos = $menu['config']['position'];
+                            $positions[$pos] = $contenido;
+
+                        }
+                    }
                 }
             }
         }
@@ -321,6 +340,15 @@ class View extends Smarty
         }
 
         throw new Exception("Error de la vista del menu");
+    }
+
+    public function getMenuConfig($idmenu){
+        $show_hide = array();
+        $show = $this->_db->query("SELECT menu_show FROM show_menues WHERE idmenu = '$idmenu'")->fetchAll(PDO::FETCH_ASSOC);
+        $hide = $this->_db->query("SELECT menu_hide FROM show_menues WHERE idmenu = '$idmenu'")->fetchAll(PDO::FETCH_ASSOC);
+        $show_hide['show'] = $show;
+        $show_hide['hide'] = $hide;
+        return $show_hide;
     }
 
     public function getWidgetContent(array $content){

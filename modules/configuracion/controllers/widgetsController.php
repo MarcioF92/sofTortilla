@@ -29,10 +29,6 @@ class widgetsController extends Controller
             if($w != '.' && $w != '..'){
                 $row = $this->_widgetsModel->getWidget($w);
                 if (!$row) {
-                    /*$class =  $w . 'Widget';
-                    $clase = new $class;
-                    $datos = $clase->datosWidget($clase);
-                    $this->_widgetsModel->agregarWidget($datos['nombre'], $datos['carpeta'], $datos['descripcion'], $datos['autor'], $datos['version']);*/
                     $json = file_get_contents(BASE_URL . 'widgets/' . $w .'/data.json');
                     $array = json_decode($json,true);
                     $data = $array['WidgetDescription'];
