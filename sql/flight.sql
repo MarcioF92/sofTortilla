@@ -2,10 +2,10 @@
 -- version 4.2.7.1
 -- http://www.phpmyadmin.net
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 27-05-2015 a las 00:10:00
--- Versión del servidor: 5.6.20
--- Versión de PHP: 5.5.15
+-- Host: 127.0.0.1
+-- Generation Time: Dec 30, 2015 at 08:55 PM
+-- Server version: 5.6.20
+-- PHP Version: 5.5.15
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,13 +17,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Base de datos: `flight`
+-- Database: `flight`
 --
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `categories`
+-- Table structure for table `categories`
 --
 
 CREATE TABLE IF NOT EXISTS `categories` (
@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS `categories` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `comments`
+-- Table structure for table `comments`
 --
 
 CREATE TABLE IF NOT EXISTS `comments` (
@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS `comments` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `menues`
+-- Table structure for table `menues`
 --
 
 CREATE TABLE IF NOT EXISTS `menues` (
@@ -59,7 +59,7 @@ CREATE TABLE IF NOT EXISTS `menues` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
--- Volcado de datos para la tabla `menues`
+-- Dumping data for table `menues`
 --
 
 INSERT INTO `menues` (`idmenu`, `nombre`, `position`, `habilitado`) VALUES
@@ -69,7 +69,7 @@ INSERT INTO `menues` (`idmenu`, `nombre`, `position`, `habilitado`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `menu_items`
+-- Table structure for table `menu_items`
 --
 
 CREATE TABLE IF NOT EXISTS `menu_items` (
@@ -83,7 +83,7 @@ CREATE TABLE IF NOT EXISTS `menu_items` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
--- Volcado de datos para la tabla `menu_items`
+-- Dumping data for table `menu_items`
 --
 
 INSERT INTO `menu_items` (`idmenuitem`, `idmenu`, `label`, `type`, `information`, `idpadre`, `orden`) VALUES
@@ -96,7 +96,7 @@ INSERT INTO `menu_items` (`idmenuitem`, `idmenu`, `label`, `type`, `information`
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `modulos`
+-- Table structure for table `modulos`
 --
 
 CREATE TABLE IF NOT EXISTS `modulos` (
@@ -107,12 +107,19 @@ CREATE TABLE IF NOT EXISTS `modulos` (
   `autor` varchar(30) NOT NULL,
   `version` varchar(30) NOT NULL,
   `habilitado` int(11) NOT NULL
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+
+--
+-- Dumping data for table `modulos`
+--
+
+INSERT INTO `modulos` (`idmodulo`, `carpeta`, `nombre`, `descripcion`, `autor`, `version`, `habilitado`) VALUES
+(5, 'cms_config', 'CMS Config', 'Config de los contenidos', 'Marcio Fuentes', '1.0', 1);
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `permisos`
+-- Table structure for table `permisos`
 --
 
 CREATE TABLE IF NOT EXISTS `permisos` (
@@ -122,7 +129,7 @@ CREATE TABLE IF NOT EXISTS `permisos` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
 
 --
--- Volcado de datos para la tabla `permisos`
+-- Dumping data for table `permisos`
 --
 
 INSERT INTO `permisos` (`idpermiso`, `permiso`, `llave`) VALUES
@@ -138,7 +145,7 @@ INSERT INTO `permisos` (`idpermiso`, `permiso`, `llave`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `permisos_role`
+-- Table structure for table `permisos_role`
 --
 
 CREATE TABLE IF NOT EXISTS `permisos_role` (
@@ -149,7 +156,7 @@ CREATE TABLE IF NOT EXISTS `permisos_role` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=20 ;
 
 --
--- Volcado de datos para la tabla `permisos_role`
+-- Dumping data for table `permisos_role`
 --
 
 INSERT INTO `permisos_role` (`idpermisorole`, `idrole`, `idpermiso`, `valor`) VALUES
@@ -171,7 +178,7 @@ INSERT INTO `permisos_role` (`idpermisorole`, `idrole`, `idpermiso`, `valor`) VA
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `permisos_usuario`
+-- Table structure for table `permisos_usuario`
 --
 
 CREATE TABLE IF NOT EXISTS `permisos_usuario` (
@@ -182,7 +189,7 @@ CREATE TABLE IF NOT EXISTS `permisos_usuario` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=19 ;
 
 --
--- Volcado de datos para la tabla `permisos_usuario`
+-- Dumping data for table `permisos_usuario`
 --
 
 INSERT INTO `permisos_usuario` (`idpermisousuario`, `idusuario`, `idpermiso`, `valor`) VALUES
@@ -192,7 +199,7 @@ INSERT INTO `permisos_usuario` (`idpermisousuario`, `idusuario`, `idpermiso`, `v
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `posts`
+-- Table structure for table `posts`
 --
 
 CREATE TABLE IF NOT EXISTS `posts` (
@@ -209,19 +216,20 @@ CREATE TABLE IF NOT EXISTS `posts` (
   `keywords` varchar(255) DEFAULT NULL,
   `comments` int(11) NOT NULL,
   `author` int(11) NOT NULL
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
--- Volcado de datos para la tabla `posts`
+-- Dumping data for table `posts`
 --
 
 INSERT INTO `posts` (`idpost`, `title`, `img`, `name`, `type`, `parent`, `enable`, `post_order`, `short_url`, `descrp`, `keywords`, `comments`, `author`) VALUES
-(1, 'El primer post de prueba', '', 'el-primer-post-de-prueba', 'page', 0, 1, 0, 'el-primer-post-de-prueba', NULL, NULL, 0, 1);
+(1, 'El primer post de prueba', '', 'el-primer-post-de-prueba', 'page', 0, 1, 0, '/el-primer-post-de-prueba', NULL, NULL, 0, 1),
+(2, 'Post Hijo', '', 'post-hijo', 'page', 1, 1, 0, '/el-primer-post-de-prueba/post-hijo', NULL, NULL, 1, 1);
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `posts_categories`
+-- Table structure for table `posts_categories`
 --
 
 CREATE TABLE IF NOT EXISTS `posts_categories` (
@@ -233,7 +241,7 @@ CREATE TABLE IF NOT EXISTS `posts_categories` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `posts_tags`
+-- Table structure for table `posts_tags`
 --
 
 CREATE TABLE IF NOT EXISTS `posts_tags` (
@@ -244,7 +252,7 @@ CREATE TABLE IF NOT EXISTS `posts_tags` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `posts_versions`
+-- Table structure for table `posts_versions`
 --
 
 CREATE TABLE IF NOT EXISTS `posts_versions` (
@@ -252,20 +260,22 @@ CREATE TABLE IF NOT EXISTS `posts_versions` (
   `idpost` int(11) NOT NULL,
   `content` text NOT NULL,
   `date` date NOT NULL,
-  `author` int(11) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+  `author` int(11) NOT NULL,
+  `show` int(11) NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
--- Volcado de datos para la tabla `posts_versions`
+-- Dumping data for table `posts_versions`
 --
 
-INSERT INTO `posts_versions` (`idversion`, `idpost`, `content`, `date`, `author`) VALUES
-(1, 1, '<h1>Contenido</h1>\r\n<p><i>Subtítulo</i></p>\r\n<p>Pseudo Lorem Ipsum</p>', '2015-05-26', 1);
+INSERT INTO `posts_versions` (`idversion`, `idpost`, `content`, `date`, `author`, `show`) VALUES
+(1, 1, '<h1>Contenido</h1>\r\n<p><i>Subtítulo</i></p>\r\n<p>Pseudo Lorem Ipsum</p>', '2015-05-26', 1, 1),
+(2, 2, 'asdadasdadasdasd', '2015-05-26', 1, 1);
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `roles`
+-- Table structure for table `roles`
 --
 
 CREATE TABLE IF NOT EXISTS `roles` (
@@ -274,7 +284,7 @@ CREATE TABLE IF NOT EXISTS `roles` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
--- Volcado de datos para la tabla `roles`
+-- Dumping data for table `roles`
 --
 
 INSERT INTO `roles` (`idrole`, `role`) VALUES
@@ -286,7 +296,28 @@ INSERT INTO `roles` (`idrole`, `role`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `tags`
+-- Table structure for table `show_menues`
+--
+
+CREATE TABLE IF NOT EXISTS `show_menues` (
+`idshow` int(11) NOT NULL,
+  `idmenu` int(11) NOT NULL,
+  `menu_show` varchar(30) DEFAULT NULL,
+  `menu_hide` varchar(30) DEFAULT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `show_menues`
+--
+
+INSERT INTO `show_menues` (`idshow`, `idmenu`, `menu_show`, `menu_hide`) VALUES
+(1, 1, 'all', NULL),
+(2, 2, NULL, 'all');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tags`
 --
 
 CREATE TABLE IF NOT EXISTS `tags` (
@@ -298,7 +329,7 @@ CREATE TABLE IF NOT EXISTS `tags` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `usuarios`
+-- Table structure for table `usuarios`
 --
 
 CREATE TABLE IF NOT EXISTS `usuarios` (
@@ -314,7 +345,7 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=16 ;
 
 --
--- Volcado de datos para la tabla `usuarios`
+-- Dumping data for table `usuarios`
 --
 
 INSERT INTO `usuarios` (`idusuario`, `nombre`, `usuario`, `pass`, `email`, `role`, `estado`, `fecha`, `codigo`) VALUES
@@ -324,7 +355,7 @@ INSERT INTO `usuarios` (`idusuario`, `nombre`, `usuario`, `pass`, `email`, `role
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `widgets`
+-- Table structure for table `widgets`
 --
 
 CREATE TABLE IF NOT EXISTS `widgets` (
@@ -338,7 +369,7 @@ CREATE TABLE IF NOT EXISTS `widgets` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=39 ;
 
 --
--- Volcado de datos para la tabla `widgets`
+-- Dumping data for table `widgets`
 --
 
 INSERT INTO `widgets` (`idwidget`, `carpeta`, `nombre`, `descripcion`, `autor`, `version`, `habilitado`) VALUES
@@ -347,7 +378,7 @@ INSERT INTO `widgets` (`idwidget`, `carpeta`, `nombre`, `descripcion`, `autor`, 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `widgets_content`
+-- Table structure for table `widgets_content`
 --
 
 CREATE TABLE IF NOT EXISTS `widgets_content` (
@@ -358,7 +389,7 @@ CREATE TABLE IF NOT EXISTS `widgets_content` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
 
 --
--- Volcado de datos para la tabla `widgets_content`
+-- Dumping data for table `widgets_content`
 --
 
 INSERT INTO `widgets_content` (`idwidgetcontent`, `idwidget`, `stringid`, `position`) VALUES
@@ -366,192 +397,203 @@ INSERT INTO `widgets_content` (`idwidgetcontent`, `idwidget`, `stringid`, `posit
 (8, 38, 'sidebar', 'sidebar');
 
 --
--- Índices para tablas volcadas
+-- Indexes for dumped tables
 --
 
 --
--- Indices de la tabla `categories`
+-- Indexes for table `categories`
 --
 ALTER TABLE `categories`
  ADD PRIMARY KEY (`idcathegory`);
 
 --
--- Indices de la tabla `comments`
+-- Indexes for table `comments`
 --
 ALTER TABLE `comments`
  ADD PRIMARY KEY (`idcomment`);
 
 --
--- Indices de la tabla `menues`
+-- Indexes for table `menues`
 --
 ALTER TABLE `menues`
  ADD PRIMARY KEY (`idmenu`);
 
 --
--- Indices de la tabla `menu_items`
+-- Indexes for table `menu_items`
 --
 ALTER TABLE `menu_items`
  ADD PRIMARY KEY (`idmenuitem`);
 
 --
--- Indices de la tabla `modulos`
+-- Indexes for table `modulos`
 --
 ALTER TABLE `modulos`
  ADD PRIMARY KEY (`idmodulo`), ADD UNIQUE KEY `nombre` (`nombre`), ADD UNIQUE KEY `carpeta` (`carpeta`);
 
 --
--- Indices de la tabla `permisos`
+-- Indexes for table `permisos`
 --
 ALTER TABLE `permisos`
  ADD PRIMARY KEY (`idpermiso`);
 
 --
--- Indices de la tabla `permisos_role`
+-- Indexes for table `permisos_role`
 --
 ALTER TABLE `permisos_role`
  ADD PRIMARY KEY (`idpermisorole`);
 
 --
--- Indices de la tabla `permisos_usuario`
+-- Indexes for table `permisos_usuario`
 --
 ALTER TABLE `permisos_usuario`
  ADD PRIMARY KEY (`idpermisousuario`);
 
 --
--- Indices de la tabla `posts`
+-- Indexes for table `posts`
 --
 ALTER TABLE `posts`
  ADD PRIMARY KEY (`idpost`), ADD UNIQUE KEY `name` (`name`,`short_url`);
 
 --
--- Indices de la tabla `posts_categories`
+-- Indexes for table `posts_categories`
 --
 ALTER TABLE `posts_categories`
  ADD PRIMARY KEY (`idpost_category`);
 
 --
--- Indices de la tabla `posts_tags`
+-- Indexes for table `posts_tags`
 --
 ALTER TABLE `posts_tags`
  ADD UNIQUE KEY `post_tag` (`idpost`,`idtag`);
 
 --
--- Indices de la tabla `posts_versions`
+-- Indexes for table `posts_versions`
 --
 ALTER TABLE `posts_versions`
  ADD PRIMARY KEY (`idversion`);
 
 --
--- Indices de la tabla `roles`
+-- Indexes for table `roles`
 --
 ALTER TABLE `roles`
  ADD PRIMARY KEY (`idrole`), ADD UNIQUE KEY `role` (`role`);
 
 --
--- Indices de la tabla `tags`
+-- Indexes for table `show_menues`
+--
+ALTER TABLE `show_menues`
+ ADD PRIMARY KEY (`idshow`);
+
+--
+-- Indexes for table `tags`
 --
 ALTER TABLE `tags`
  ADD PRIMARY KEY (`idtag`), ADD UNIQUE KEY `title` (`title`,`name`);
 
 --
--- Indices de la tabla `usuarios`
+-- Indexes for table `usuarios`
 --
 ALTER TABLE `usuarios`
  ADD PRIMARY KEY (`idusuario`), ADD UNIQUE KEY `codigo` (`codigo`);
 
 --
--- Indices de la tabla `widgets`
+-- Indexes for table `widgets`
 --
 ALTER TABLE `widgets`
  ADD PRIMARY KEY (`idwidget`);
 
 --
--- Indices de la tabla `widgets_content`
+-- Indexes for table `widgets_content`
 --
 ALTER TABLE `widgets_content`
  ADD PRIMARY KEY (`idwidgetcontent`);
 
 --
--- AUTO_INCREMENT de las tablas volcadas
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT de la tabla `categories`
+-- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
 MODIFY `idcathegory` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT de la tabla `comments`
+-- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
 MODIFY `idcomment` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT de la tabla `menues`
+-- AUTO_INCREMENT for table `menues`
 --
 ALTER TABLE `menues`
 MODIFY `idmenu` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
--- AUTO_INCREMENT de la tabla `menu_items`
+-- AUTO_INCREMENT for table `menu_items`
 --
 ALTER TABLE `menu_items`
 MODIFY `idmenuitem` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 --
--- AUTO_INCREMENT de la tabla `modulos`
+-- AUTO_INCREMENT for table `modulos`
 --
 ALTER TABLE `modulos`
-MODIFY `idmodulo` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+MODIFY `idmodulo` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 --
--- AUTO_INCREMENT de la tabla `permisos`
+-- AUTO_INCREMENT for table `permisos`
 --
 ALTER TABLE `permisos`
 MODIFY `idpermiso` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
 --
--- AUTO_INCREMENT de la tabla `permisos_role`
+-- AUTO_INCREMENT for table `permisos_role`
 --
 ALTER TABLE `permisos_role`
 MODIFY `idpermisorole` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=20;
 --
--- AUTO_INCREMENT de la tabla `permisos_usuario`
+-- AUTO_INCREMENT for table `permisos_usuario`
 --
 ALTER TABLE `permisos_usuario`
 MODIFY `idpermisousuario` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=19;
 --
--- AUTO_INCREMENT de la tabla `posts`
+-- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
-MODIFY `idpost` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+MODIFY `idpost` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
--- AUTO_INCREMENT de la tabla `posts_categories`
+-- AUTO_INCREMENT for table `posts_categories`
 --
 ALTER TABLE `posts_categories`
 MODIFY `idpost_category` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT de la tabla `posts_versions`
+-- AUTO_INCREMENT for table `posts_versions`
 --
 ALTER TABLE `posts_versions`
-MODIFY `idversion` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+MODIFY `idversion` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
--- AUTO_INCREMENT de la tabla `roles`
+-- AUTO_INCREMENT for table `roles`
 --
 ALTER TABLE `roles`
 MODIFY `idrole` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
--- AUTO_INCREMENT de la tabla `tags`
+-- AUTO_INCREMENT for table `show_menues`
+--
+ALTER TABLE `show_menues`
+MODIFY `idshow` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT for table `tags`
 --
 ALTER TABLE `tags`
 MODIFY `idtag` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT de la tabla `usuarios`
+-- AUTO_INCREMENT for table `usuarios`
 --
 ALTER TABLE `usuarios`
 MODIFY `idusuario` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;
 --
--- AUTO_INCREMENT de la tabla `widgets`
+-- AUTO_INCREMENT for table `widgets`
 --
 ALTER TABLE `widgets`
 MODIFY `idwidget` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=39;
 --
--- AUTO_INCREMENT de la tabla `widgets_content`
+-- AUTO_INCREMENT for table `widgets_content`
 --
 ALTER TABLE `widgets_content`
 MODIFY `idwidgetcontent` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
