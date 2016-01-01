@@ -38,10 +38,10 @@ abstract class Widget
 
 	}
 
-    public function habilitado($widget){
-    	$this->_registry = Registry::getInstancia();
+    public function enabled($widget){
+    	$this->_registry = Registry::getInstance();
         $this->_db = $this->_registry->_db;
-        $rowObj = $this->_db->query("SELECT * FROM widgets WHERE carpeta = '$widget' AND habilitado = 1");
+        $rowObj = $this->_db->query("SELECT * FROM widgets WHERE folder = '$widget' AND enabled = 1");
         $row = $rowObj->fetch();
         if ($row && count($row)) {
         	return 1;

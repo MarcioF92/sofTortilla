@@ -8,7 +8,7 @@ class Model
 
 	public function __construct()
 	{
-		$this->_registry = Registry::getInstancia();
+		$this->_registry = Registry::getInstance();
 		$this->_db = $this->_registry->_db;
 	}
 }

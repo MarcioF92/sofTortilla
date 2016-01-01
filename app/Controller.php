@@ -7,10 +7,10 @@ abstract class Controller
 	protected $_view;
     protected $_acl;
     protected $_request;
-    protected $_datos;
+    protected $_data;
 
 	public function __construct(){
-        $this->_registry = Registry::getInstancia();
+        $this->_registry = Registry::getInstance();
         $this->_acl = $this->_registry->_acl;
         $this->_request = $this->_registry->_request;
 		$this->_view = new View($this->_request, $this->_acl);
@@ -18,25 +18,25 @@ abstract class Controller
 	
     abstract public function index(); // Obliga a hijos implementar Index, el cual se usará por defecto
 
-    protected function loadModel($modelo, $modulo = false)
+    protected function loadModel($model, $module = false)
     {
-        $modelo = $modelo . 'Model';
-        $rutaModelo = ROOT . 'models' . DS . $modelo . '.php';
+        $model = $model . 'Model';
+        $rutaModel = ROOT . 'models' . DS . $model . '.php';
 
-        if (!$modulo) {
-            $modulo = $this->_request->getModulo();
+        if (!$module) {
+            $module = $this->_request->getModule();
         }
 
-        if ($modulo) {
-           if ($modulo  != 'default') {
-               $rutaModelo = ROOT . 'modules' . DS . $modulo . DS . 'models' . DS . $modelo . '.php';
+        if ($module) {
+           if ($module  != 'default') {
+               $rutaModel = ROOT . 'modules' . DS . $module . DS . 'models' . DS . $model . '.php';
            }
         }
  
-        if (is_readable($rutaModelo)) {
-            require_once $rutaModelo;
-            $modelo = new $modelo();
-            return $modelo;
+        if (is_readable($rutaModel)) {
+            require_once $rutaModel;
+            $model = new $model();
+            return $model;
         } else {
             throw new Exception('Error de modelo');
         }
@@ -45,38 +45,38 @@ abstract class Controller
 
     // Para Agregar librerías
 
-    protected function getLibrary($libreria){
-        $rutaLibreria = ROOT . 'libs' . DS . $libreria . '.php';
+    protected function getLibrary($library){
+        $rutaLibrary = ROOT . 'libs' . DS . $library . '.php';
 
-        if (is_readable($rutaLibreria)) {
-            require_once $rutaLibreria;
+        if (is_readable($rutaLibrary)) {
+            require_once $rutaLibrary;
         } else {
             throw new Exception("Error de Librería");
             
         }
     }
 
-    protected function getTexto($clave){ //Toma variable por post, filtra y devuelve filtrado
-        if(isset($_POST[$clave]) && !empty($_POST[$clave])){
-            $_POST[$clave] = htmlspecialchars($_POST[$clave], ENT_QUOTES);
-            return $_POST[$clave];
+    protected function getText($key){ //Toma variable por post, filtra y devuelve filtrado
+        if(isset($_POST[$key]) && !empty($_POST[$key])){
+            $_POST[$key] = htmlspecialchars($_POST[$key], ENT_QUOTES);
+            return $_POST[$key];
         } else {
             return "";
         }
     }
 
-    protected function getInt($clave){ // Filtra enteros que van por POST
-        if(isset($_POST[$clave]) && !empty($_POST[$clave])){
-            $_POST[$clave] = filter_input(INPUT_POST, $clave, FILTER_VALIDATE_INT);
-            return $_POST[$clave];
+    protected function getInt($key){ // Filtra enteros que van por POST
+        if(isset($_POST[$key]) && !empty($_POST[$key])){
+            $_POST[$key] = filter_input(INPUT_POST, $key, FILTER_VALIDATE_INT);
+            return $_POST[$key];
         } else {
             return 0;
         }
     }
 
-    protected function redireccionar($ruta = false){
-        if($ruta){
-            header('Location: ' . BASE_URL . $ruta);
+    protected function redirect($path = false){
+        if($path){
+            header('Location: ' . BASE_URL . $path);
             exit;
         } else {
             header('Location: ' . BASE_URL);
@@ -84,7 +84,7 @@ abstract class Controller
         }
     }
 
-    protected function filtrarInt($int) { // Filtra enteros que van por GET
+    protected function filterInt($int) { // Filtra enteros que van por GET
         $int = (int) $int;
         if(is_int($int)){
             return $int;
@@ -93,32 +93,32 @@ abstract class Controller
         }
     }
 
-    protected function getPostParam($clave){
-        if (isset($_POST[$clave])) {
-            return $_POST[$clave];
+    protected function getPostParam($key){
+        if (isset($_POST[$key])) {
+            return $_POST[$key];
         }
     }
 
-    protected function getSql($clave){ //Limpia los stringtags y evita inyecciones SQL
-        if (isset($_POST[$clave]) && !empty($_POST[$clave])) {
-            $_POST[$clave] = strip_tags($_POST[$clave]);
+    protected function getSql($key){ //Limpia los stringtags y evita inyecciones SQL
+        if (isset($_POST[$key]) && !empty($_POST[$key])) {
+            $_POST[$key] = strip_tags($_POST[$key]);
 
             if (!get_magic_quotes_gpc()) {
-                $_POST[$clave] = mysql_escape_string($_POST[$clave]);
+                $_POST[$key] = mysql_escape_string($_POST[$key]);
             }
 
-            return trim($_POST[$clave]);
+            return trim($_POST[$key]);
         }
     }
 
-    protected function getAlphaNum($clave){ //Solo acepta caracteres A-Z, 0-9 y _
-        if (isset($_POST[$clave]) && !empty($_POST[$clave])) {
-            $_POST[$clave] = (string) preg_replace('/[^A-Za-z0-9_]/i', '', $_POST[$clave]);
-            return trim($_POST[$clave]);
+    protected function getAlphaNum($key){ //Solo acepta caracteres A-Z, 0-9 y _
+        if (isset($_POST[$key]) && !empty($_POST[$key])) {
+            $_POST[$key] = (string) preg_replace('/[^A-Za-z0-9_]/i', '', $_POST[$key]);
+            return trim($_POST[$key]);
         }
     }
 
-    public function validarEmail($email){
+    public function validateEmail($email){
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             return false;
         }
@@ -126,8 +126,8 @@ abstract class Controller
         return true;
     }
 
-    public function datosController(){
-        return $this->_datos;
+    public function dataController(){
+        return $this->_data;
     }
 }
 

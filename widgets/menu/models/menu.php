@@ -11,41 +11,41 @@ class menuWidgetModel extends Model{
         $menus['sidebar'] = array(
             array(
             'id' => 'inicio',
-            'titulo' =>  'Inicio',
-            'enlace' => BASE_URL 
+            'label' =>  'Inicio',
+            'link' => BASE_URL 
             ),
             array(
                 'id' => 'login',
-                'titulo' =>  'Cerrar Sesión',
-                'enlace' => BASE_URL . "login/cerrar"
+                'label' =>  'Cerrar Sesión',
+                'link' => BASE_URL . "login/cerrar"
             ),
             array(
                 'id' => 'login',
-                'titulo' =>  'Iniciar Sesión',
-                'enlace' => BASE_URL . "login"
+                'label' =>  'Iniciar Sesión',
+                'link' => BASE_URL . "login"
             ),
             array(
                 'id' => 'registro',
-                'titulo' =>  'Registrarse',
-                'enlace' => BASE_URL . "registro"
+                'label' =>  'Registrarse',
+                'link' => BASE_URL . "registro"
             )
         );
 
         $menus['top'] = array(
             array(
             'id' => 'inicio',
-            'titulo' =>  'Inicio',
-            'enlace' => BASE_URL 
+            'label' =>  'Inicio',
+            'link' => BASE_URL 
             ),
             array(
             'id' => 'post',
-            'titulo' =>  'Post',
-            'enlace' => BASE_URL . "post"
+            'label' =>  'Post',
+            'link' => BASE_URL . "post"
             ),
             array(
             'id' => 'configuracion',
-            'titulo' =>  'Configuración',
-            'enlace' => BASE_URL . "configuracion"
+            'label' =>  'Configuración',
+            'link' => BASE_URL . "configuracion"
             )
         );
 

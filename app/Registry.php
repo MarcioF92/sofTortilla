@@ -4,7 +4,7 @@
 
 class Registry{
 
-	private static $_instancia;
+	private static $_instance;
 	private $_data;
 
 	//Es private porque se asegura de que no se pueda crear una instancia de la clase
@@ -13,12 +13,12 @@ class Registry{
 	}
 
 	//Singleton papá!!!
-	public static function getInstancia(){
-		if (!self::$_instancia instanceof self) {
-			self::$_instancia = new Registry();
+	public static function getInstance(){
+		if (!self::$_instance instanceof self) {
+			self::$_instance = new Registry();
 		}
 
-		return self::$_instancia;
+		return self::$_instance;
 	}
 
 	public function __set($name, $value){

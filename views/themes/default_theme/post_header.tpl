@@ -9,9 +9,9 @@
         <meta name="author" content="{$post.author}">
         <title>{$post.title|default:"Sin titulo"}</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
-        <link href="{$_layoutParams.ruta_css}normalize.css" rel="stylesheet" type="text/css" />
-        <link href="{$_layoutParams.ruta_css}foundation.css" rel="stylesheet" type="text/css" />
-        <script src="{$_layoutParams.ruta_js}vendor/modernizr.js" type="text/javascript"></script>
+        <link href="{$_layoutParams.path_css}normalize.css" rel="stylesheet" type="text/css" />
+        <link href="{$_layoutParams.path_css}foundation.css" rel="stylesheet" type="text/css" />
+        <script src="{$_layoutParams.path_js}vendor/modernizr.js" type="text/javascript"></script>
         <script src="{$_layoutParams.root}public/js/jquery.js" type="text/javascript"></script>
 
         {if isset($_layoutParams.js) && count($_layoutParams.js)}

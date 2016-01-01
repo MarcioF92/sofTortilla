@@ -12,7 +12,7 @@ class postModel extends Model{
 	}
 
 	public function getPost($url){
-		$post = $this->_db->query("SELECT v.*, p.* FROM posts_versions v INNER JOIN posts p ON v.idpost = p.idpost WHERE p.short_url = '$url'");
+		$post = $this->_db->query("SELECT v.*, p.* FROM posts_revisions v INNER JOIN posts p ON v.idpost = p.idpost WHERE p.short_url = '$url'");
 		return $post->fetch(PDO::FETCH_ASSOC);
 	}
 

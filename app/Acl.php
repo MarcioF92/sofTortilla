@@ -4,64 +4,64 @@ class Acl
 {
 	private $_registry;
 	private $_db;
-	private $_idusuario;
+	private $_iduser;
 	private $_idrole;
-	private $_permisos;
+	private $_permissions;
 
 	public function __construct($id = false){
 		if($id){
-			$this->_idusuario = (int) $id;
+			$this->_iduser = (int) $id;
 		} else {
 			if(Session::get('idusuario')){
-				$this->_idusuario = Session::get('idusuario');
+				$this->_iduser = Session::get('idusuario');
 			} else {
-				$this->_idusuario = 0;
+				$this->_iduser = 0;
 			}
 		}
 
-		$this->_registry = Registry::getInstancia();
+		$this->_registry = Registry::getInstance();
 		$this->_db = $this->_registry->_db;
 		$this->_idrole = $this->getRole();
-		$this->_permisos = $this->getPermisosRole();
-		$this->compilarAcl();
+		$this->_permissions = $this->getPermissionsRole();
+		$this->compileAcl();
 		
 	}
 
-	public function compilarAcl(){
-		$this->_permisos =  array_merge($this->_permisos, $this->getPermisosUsuario());
+	public function compileAcl(){
+		$this->_permissions =  array_merge($this->_permissions, $this->getPermissonsUser());
 	}
 
 	public function getRole(){
-		$role = $this->_db->query("SELECT role FROM usuarios WHERE idusuario = {$this->_idusuario}");
+		$role = $this->_db->query("SELECT role FROM users WHERE iduser = {$this->_iduser}");
 		$role = $role->fetch();
 
 		return $role['role'];
 	}
 
-	public function getPermisosRoleId(){
-		$ids = $this->_db->query("SELECT idpermiso FROM permisos_role WHERE idrole = '{$this->_idrole}'");
+	public function getPermissionsRoleId(){
+		$ids = $this->_db->query("SELECT idpermission FROM permissions_role WHERE idrole = '{$this->_idrole}'");
 		$ids = $ids->fetchAll(PDO::FETCH_ASSOC);
 		$id = [];
 		for ($i=0; $i < count($ids); $i++) { 
-			$id[] = $ids[$i]['idpermiso'];
+			$id[] = $ids[$i]['idpermission'];
 		}
 
 		return $id;
 	}
 
-	public function getPermisosRole(){
-		$permisos = $this->_db->query("SELECT * FROM permisos_role WHERE idrole = '{$this->_idrole}'");
+	public function getPermissionsRole(){
+		$permissions = $this->_db->query("SELECT * FROM permissions_role WHERE idrole = '{$this->_idrole}'");
 
-		$permisos = $permisos->fetchAll(PDO::FETCH_ASSOC);
+		$permissions = $permissions->fetchAll(PDO::FETCH_ASSOC);
 		$data = array();
 
-		for ($i=0; $i < count($permisos); $i++) {
-			$key = $this->getPermisoKey($permisos[$i]['idpermiso']);
+		for ($i=0; $i < count($permissions); $i++) {
+			$key = $this->getPermissionKey($permissions[$i]['idpermission']);
 			if ($key == '') {
 				continue;
 			}
 
-			if ($permisos[$i]['valor'] == 1) {
+			if ($permissions[$i]['value'] == 1) {
 				$v = true;
 			} else {
 				$v = false;
@@ -69,53 +69,53 @@ class Acl
 
 			$data[$key] = array(
 				'key' => $key,
-				'permiso' => $this->getPermisoNombre($permisos[$i]['idpermiso']),
-				'valor' => $v,
-				'heredado' => true,
-				'idpermiso' => $permisos[$i]['idpermiso']
+				'permision' => $this->getPermissionName($permissions[$i]['idpermission']),
+				'value' => $v,
+				'inherited' => true,
+				'idpermission' => $permissions[$i]['idpermission']
 			);
 		}
 
 		return $data;
 	}
 
-	public function getPermisoKey($idpermiso){
-		$idpermiso = (int) $idpermiso;
+	public function getPermissionKey($idpermission){
+		$idpermission = (int) $idpermission;
 
-		$key = $this->_db->query("SELECT llave FROM permisos WHERE idpermiso = {$idpermiso}");
+		$key = $this->_db->query("SELECT permission_key FROM permissions WHERE idpermission = {$idpermission}");
 		$key = $key->fetch();
-		return $key['llave'];
+		return $key['permission_key'];
 	}
 
-	public function getPermisoNombre($idpermiso){
-		$idpermiso = (int) $idpermiso;
+	public function getPermissionName($idpermission){
+		$idpermission = (int) $idpermission;
 
-		$key = $this->_db->query("SELECT permiso FROM permisos WHERE idpermiso = {$idpermiso}");
+		$key = $this->_db->query("SELECT name FROM permissions WHERE idpermission = {$idpermission}");
 		$key = $key->fetch();
-		return $key['permiso'];
+		return $key['name'];
 	}
 
-	public function getPermisosUsuario(){
-		$ids = $this->getPermisosRoleId();
+	public function getPermissonsUser(){
+		$ids = $this->getPermissionsRoleId();
 
-		$permisos = [];
+		$permissions = [];
 
 		if (count($ids)) {
 		
-			$permisos = $this->_db->query("SELECT * FROM permisos_usuario WHERE idusuario = {$this->_idusuario} AND idpermiso in (" . implode(",", $ids) . ")");
+			$permissions = $this->_db->query("SELECT * FROM permissions_user WHERE iduser = {$this->_iduser} AND idpermission in (" . implode(",", $ids) . ")");
 
-			$permisos = $permisos->fetchAll(PDO::FETCH_ASSOC);
+			$permissions = $permissions->fetchAll(PDO::FETCH_ASSOC);
 		}
 
 		$data = array();
 
-		for ($i=0; $i < count($permisos); $i++) {
-			$key = $this->getPermisoKey($permisos[$i]['idpermiso']);
+		for ($i=0; $i < count($permissions); $i++) {
+			$key = $this->getPermissionKey($permissions[$i]['idpermission']);
 			if ($key == '') {
 				continue;
 			}
 
-			if ($permisos[$i]['valor'] == 1) {
+			if ($permissions[$i]['value'] == 1) {
 				$v = true;
 			} else {
 				$v = false;
@@ -123,25 +123,25 @@ class Acl
 
 			$data[$key] = array(
 				'key' => $key,
-				'permiso' => $this->getPermisoNombre($permisos[$i]['idpermiso']),
-				'valor' => $v,
-				'heredado' => false,
-				'idpermiso' => $permisos[$i]['idpermiso']
+				'permission' => $this->getPermissionName($permissions[$i]['idpermission']),
+				'value' => $v,
+				'inherited' => false,
+				'idpermission' => $permissions[$i]['idpermission']
 			);
 		}
 
 		return $data;
 	}
 
-	public function getPermisos(){
-		if (isset($this->_permisos) && count($this->_permisos)) {
-			return $this->_permisos;
+	public function getPermissions(){
+		if (isset($this->_permissions) && count($this->_permissions)) {
+			return $this->_permissions;
 		}
 	}
 
-	public function permiso($key){
-		if (array_key_exists($key, $this->_permisos)) {
-			if ($this->_permisos[$key]['valor'] == true || $this->_permisos[$key]['valor'] == 1) {
+	public function permission($key){
+		if (array_key_exists($key, $this->_permissions)) {
+			if ($this->_permissions[$key]['value'] == true || $this->_permissions[$key]['value'] == 1) {
 				return true;	
 			}
 		}
@@ -149,8 +149,8 @@ class Acl
 		return false;
 	}
 
-	public function acceso($key){
-		if ($this->permiso($key)) {
+	public function access($key){
+		if ($this->permission($key)) {
 			Session::tiempo();
 			return;
 		}

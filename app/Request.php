@@ -5,11 +5,11 @@
  
 class Request
 {
-    private $_modulo;
+    private $_module;
     private $_modules;
-    private $_controlador;
-    private $_metodo;
-    private $_argumentos;
+    private $_controller;
+    private $_method;
+    private $_args;
     private $_db;
  
     public function __construct()
@@ -33,76 +33,76 @@ class Request
             // 1. Modulo, controlador, métodos argumentos
             // 2. Controlador, método, argumentos
  
-            $this->_modulo = strtolower(array_shift($url));
+            $this->_module = strtolower(array_shift($url));
 
-            if (!$this->_modulo) {
-                $this->_modulo = false;
+            if (!$this->_module) {
+                $this->_module = false;
             } else {
                 if (count($this->_modules)) {
-                    if (!in_array($this->_modulo, $this->_modules)) {                        
-                        $this->_controlador = $this->_modulo;
-                        $this->_modulo = false;
+                    if (!in_array($this->_module, $this->_modules)) {                        
+                        $this->_controller = $this->_module;
+                        $this->_module = false;
                     } else {
-                        $row = $this->_db->query("SELECT * FROM modulos WHERE carpeta = '$this->_modulo'")->fetch();
-                        if($row['habilitado'] == 1 || $this->_modulo == 'configuracion'){
-                            $this->_controlador = strtolower(array_shift($url)); // Tomamos la segunda posición del array como controlador
+                        $row = $this->_db->query("SELECT * FROM modules WHERE folder = '$this->_module'")->fetch();
+                        if($row['enable'] == 1 || $this->_module == 'configuracion'){
+                            $this->_controller = strtolower(array_shift($url)); // Tomamos la segunda posición del array como controlador
 
-                            if (!$this->_controlador) {
-                                $this->_controlador = 'index';
+                            if (!$this->_controller) {
+                                $this->_controller = 'index';
                             }
 
                         } else {
-                            $this->_controlador = 'index';
-                            $this->_modulo = false;
+                            $this->_controller = 'index';
+                            $this->_module = false;
                         }
                     }
                 } else {
-                    $this->_controlador = $this->_modulo;
-                    $this->_modulo = false;
+                    $this->_controller = $this->_module;
+                    $this->_module = false;
                 }
             }
 
-            $this->_metodo = strtolower(array_shift($url)); // Toma la segunda como método
-            $this->_argumentos = $url; // Los argumentos de la URL
+            $this->_method = strtolower(array_shift($url)); // Toma la segunda como método
+            $this->_args = $url; // Los argumentos de la URL
             
         }
 
         /* Si no existen controlador, método y argumentos, se utilizan los por defectos*/
 
-        if(!$this->_controlador){
-            $this->_controlador = DEFAULT_CONTROLLER;
+        if(!$this->_controller){
+            $this->_controller = DEFAULT_CONTROLLER;
         }
  
-        if(!$this->_metodo){
-            $this->_metodo = 'index';
+        if(!$this->_method){
+            $this->_method = 'index';
         }
  
-        if(!isset($this->_argumentos)){
-            $this->_argumentos = array();
+        if(!isset($this->_args)){
+            $this->_args = array();
         }
 
     }
 
     // Métodos para obtener controladores de los atributos
 
-    public function getModulo()
+    public function getModule()
     {
-        return $this->_modulo;
+        return $this->_module;
     }
  
-    public function getControlador()
+    public function getController()
     {
-        return $this->_controlador;
+        return $this->_controller;
     }
  
-    public function getMetodo()
+    public function getMethod()
     {
-        return $this->_metodo;
+        return $this->_method;
     }
  
-    public function getArgumentos()
+    public function getArgs()
     {
-        return $this->_argumentos;
+        return $this->_args;
     }
 }
 ?>

@@ -11,7 +11,7 @@ if (isset($items_final) && sizeof($items_final) > 0) {
 				$_item_style = 'active';
 			}
 			?>
-			<li class="<?php echo $_item_style; ?> has-dropdown"><a  href="<?php echo $item[0]['enlace']; ?>"><?php echo $item[0]['titulo']; ?></a>
+			<li class="<?php echo $_item_style; ?> has-dropdown"><a  href="<?php echo $item[0]['link']; ?>"><?php echo $item[0]['label']; ?></a>
 
 			<ul class="dropdown">
 			<?php
@@ -20,7 +20,7 @@ if (isset($items_final) && sizeof($items_final) > 0) {
 						$_item_style = 'active';
 					}
 					?>
-					<li><a href="<?php echo $item[$x]['enlace']; ?>"><?php echo $item[$x]['titulo']; ?></a></li>
+					<li><a href="<?php echo $item[$x]['link']; ?>"><?php echo $item[$x]['label']; ?></a></li>
 			<?php } ?>
 			</ul>
 			</li>
@@ -33,7 +33,7 @@ if (isset($items_final) && sizeof($items_final) > 0) {
 
 			?>
 
-			<li class="<?php echo $_item_style; ?>"><a  href="<?php echo $item['enlace']; ?>"><?php echo $item['titulo']; ?></a></li>
+			<li class="<?php echo $_item_style; ?>"><a  href="<?php echo $item['link']; ?>"><?php echo $item['label']; ?></a></li>
 <?php 	}
 
 	}

@@ -1,22 +1,22 @@
-<?php /* Smarty version Smarty-3.1.8, created on 2015-05-28 00:11:03
+<?php /* Smarty version Smarty-3.1.8, created on 2016-01-01 19:49:30
          compiled from "D:\Marcio\Programas\xampp_1_8\htdocs\Frameworks\flight_editado\views\themes\default_theme\post_header.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:504255663fe397e743-78499609%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:139455686c9d74eac44-64863103%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '12ec5f62819491969e8193939c1c6beecd4d2897' => 
     array (
       0 => 'D:\\Marcio\\Programas\\xampp_1_8\\htdocs\\Frameworks\\flight_editado\\views\\themes\\default_theme\\post_header.tpl',
-      1 => 1432764659,
+      1 => 1451674167,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '504255663fe397e743-78499609',
+  'nocache_hash' => '139455686c9d74eac44-64863103',
   'function' => 
   array (
   ),
   'version' => 'Smarty-3.1.8',
-  'unifunc' => 'content_55663fe3a00667_94630663',
+  'unifunc' => 'content_5686c9d7670ab0_40339564',
   'variables' => 
   array (
     'post' => 0,
@@ -28,7 +28,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   ),
   'has_nocache_code' => false,
 ),false); /*/%%SmartyHeaderCode%%*/?>
-<?php if ($_valid && !is_callable('content_55663fe3a00667_94630663')) {function content_55663fe3a00667_94630663($_smarty_tpl) {?><!DOCTYPE html>
+<?php if ($_valid && !is_callable('content_5686c9d7670ab0_40339564')) {function content_5686c9d7670ab0_40339564($_smarty_tpl) {?><!DOCTYPE html>
 <!--[if IE 9]><html class="lt-ie10" lang="en" > <![endif]-->
 <html class="no-js" lang="es" >
     <head>
@@ -43,11 +43,11 @@ $_valid = $_smarty_tpl->decodeProperties(array (
         <title><?php echo (($tmp = @$_smarty_tpl->tpl_vars['post']->value['title'])===null||$tmp==='' ? "Sin titulo" : $tmp);?>
 </title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
-        <link href="<?php echo $_smarty_tpl->tpl_vars['_layoutParams']->value['ruta_css'];?>
+        <link href="<?php echo $_smarty_tpl->tpl_vars['_layoutParams']->value['path_css'];?>
 normalize.css" rel="stylesheet" type="text/css" />
-        <link href="<?php echo $_smarty_tpl->tpl_vars['_layoutParams']->value['ruta_css'];?>
+        <link href="<?php echo $_smarty_tpl->tpl_vars['_layoutParams']->value['path_css'];?>
 foundation.css" rel="stylesheet" type="text/css" />
-        <script src="<?php echo $_smarty_tpl->tpl_vars['_layoutParams']->value['ruta_js'];?>
+        <script src="<?php echo $_smarty_tpl->tpl_vars['_layoutParams']->value['path_js'];?>
 vendor/modernizr.js" type="text/javascript"></script>
         <script src="<?php echo $_smarty_tpl->tpl_vars['_layoutParams']->value['root'];?>
 public/js/jquery.js" type="text/javascript"></script>

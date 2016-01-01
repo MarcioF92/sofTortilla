@@ -9,7 +9,7 @@ class View extends Smarty
     private $_request;
     private $_js;
     private $_acl;
-    private $_rutas;
+    private $_paths;
     private $_jsPlugin;
     private $_template;
     private $_theme;
@@ -19,31 +19,31 @@ class View extends Smarty
     private $_registry;
     private $_db;
  
-    public function __construct(Request $peticion, Acl $_acl)
+    public function __construct(Request $petition, Acl $_acl)
     {
         parent::__construct();
-        $this->_request = $peticion;
+        $this->_request = $petition;
         $this->_js = array();
         $this->_acl = $_acl;
-        $this->_rutas = array();
+        $this->_paths = array();
         $this->_jsPlugin = array();
         $this->_template = DEFAULT_LAYOUT;
         $this->_theme = DEFAULT_THEME;
 
-        $this->_registry = Registry::getInstancia();
+        $this->_registry = Registry::getInstance();
         $this->_db = $this->_registry->_db;
 
         self::$_item = null;
 
-        $modulo = $this->_request->getModulo();
-        $controlador = $this->_request->getControlador();
+        $module = $this->_request->getModule();
+        $controller = $this->_request->getController();
 
-        if ($modulo) {
-            $this->_rutas['view'] = ROOT . 'modules' . DS . $modulo . DS . 'views' . DS . $controlador . DS;
-            $this->_rutas['js'] = BASE_URL . 'modules/' . $modulo . '/views/' . $controlador . '/js/';
+        if ($module) {
+            $this->_paths['view'] = ROOT . 'modules' . DS . $module . DS . 'views' . DS . $controller . DS;
+            $this->_paths['js'] = BASE_URL . 'modules/' . $module . '/views/' . $controller . '/js/';
         } else {
-            $this->_rutas['view'] = ROOT . 'views' . DS . $controlador . DS;
-            $this->_rutas['js'] = BASE_URL . '/views/' . $controlador . '/js/';
+            $this->_paths['view'] = ROOT . 'views' . DS . $controller . DS;
+            $this->_paths['js'] = BASE_URL . '/views/' . $controller . '/js/';
         }
     }
 
@@ -51,7 +51,7 @@ class View extends Smarty
         return self::$_item;
     }
  
-    public function render($vista = false, $item = false, $noLayout = false) // La llamada a las vistas, recibe la vista como parámetro para su controlador, dibuja la vista
+    public function render($view = false, $item = false, $noLayout = false) // La llamada a las vistas, recibe la vista como parámetro para su controlador, dibuja la vista
     {
 
         if ($item) {
@@ -72,9 +72,9 @@ class View extends Smarty
         /* Rutas por defecto para los estilos las img y los js del View Layout Default */
  
         $_params = array(
-            'ruta_css' => BASE_URL . 'views/themes/' . $this->_theme . '/css/',
-            'ruta_img' => BASE_URL . 'views/themes/' . $this->_theme . '/img/',
-            'ruta_js' => BASE_URL . 'views/themes/' . $this->_theme . '/js/',
+            'path_css' => BASE_URL . 'views/themes/' . $this->_theme . '/css/',
+            'path_img' => BASE_URL . 'views/themes/' . $this->_theme . '/img/',
+            'path_js' => BASE_URL . 'views/themes/' . $this->_theme . '/js/',
             'item' => self::$_item,
             'js'=>$js,
             'jsPlugin'=> $this->_jsPlugin,
@@ -86,17 +86,17 @@ class View extends Smarty
             )
         );
 
-         // La ruta al View del controlador $this->_rutas['view'] . $vista . '.tpl';
+         // La ruta al View del controlador $this->_paths['view'] . $view . '.tpl';
         
-        if($vista){
-            if(is_readable($this->_rutas['view'] . $vista . '.tpl')){
+        if($view){
+            if(is_readable($this->_paths['view'] . $view . '.tpl')){
                 if($noLayout){
-                    $this->template_dir = $this->_rutas['view'];
-                    $this->display($this->_rutas['view'] . $vista . '.tpl');
+                    $this->template_dir = $this->_paths['view'];
+                    $this->display($this->_paths['view'] . $view . '.tpl');
                     exit;
                 }
 
-                $this->assign('_contenido', $this->_rutas['view'] . $vista . '.tpl');
+                $this->assign('_content', $this->_paths['view'] . $view . '.tpl');
             } 
             else {
                 throw new Exception('Error de vista');
@@ -114,7 +114,7 @@ class View extends Smarty
     public function setJs(array $js){
         if(is_array($js) && count($js)){
             for ($i=0; $i < count($js); $i++) { 
-                $this->_js[] = $this->_rutas['js'] . $js[$i] . '.js';
+                $this->_js[] = $this->_paths['js'] . $js[$i] . '.js';
             } 
         } else {
             throw new Exception("Error de js");
@@ -210,9 +210,9 @@ class View extends Smarty
         $widgets_result_array = $widgets_result->fetchall(PDO::FETCH_ASSOC);
         $widgets = array();
         foreach ($widgets_result_array as $w) {
-            $widgets[$w['carpeta'] . "-" . $w['stringid']] = array( 
-                                                        'nombre' => $w['carpeta'],
-                                                        'config' => $this->widget($w['carpeta'], 'getConfig', array($w['stringid'])),
+            $widgets[$w['folder'] . "-" . $w['stringid']] = array( 
+                                                        'name' => $w['folder'],
+                                                        'config' => $this->widget($w['folder'], 'getConfig', array($w['stringid'])),
                                                         'content' => $this->widgetMethod('menu', 'getContent', array($w['stringid'], $w['position']))
                                                         );
         }
@@ -228,14 +228,14 @@ class View extends Smarty
                 if (!isset($widgets[$k]['config']['hide']) || !in_array(self::$_item, $widgets[$k]['config']['hide'])) {
                     // Verificar si widget está habilitado para esa vista //
                     if ($widgets[$k]['config']['show'] === 'all' || in_array(self::$_item, $widgets[$k]['config']['show'])) {
-                        if ($widgets[$k]['config']['habilitado'] == 1) {                       
+                        if ($widgets[$k]['config']['enabled'] == 1) {                       
                             if (isset($this->_widget[$k])) {
                                 $widgets[$k]['content'][2] = $this->_widget[$k];
                             }
                             // Llenar la posición del Layout //
-                            $contenido = $widgets[$k]['content'];
+                            $content = $widgets[$k]['content'];
                             $pos = $widgets[$k]['config']['position'];
-                            $positions[$pos][] = $this->getWidgetContent($contenido);
+                            $positions[$pos][] = $this->getWidgetContent($content);
                         }
                     }
                 }
@@ -253,10 +253,10 @@ class View extends Smarty
         foreach ($menues_result_array as $m) {
             $show_hide = $this->getMenuConfig($m['idmenu']);
             $menues[$m['idmenu']] = array( 
-                                        'nombre' => $m['nombre'],
+                                        'name' => $m['name'],
                                         'config' => array(
                                             'position' => $m['position'], 
-                                            'habilitado' => $m['habilitado'],
+                                            'enabled' => $m['enabled'],
                                             'show' => $show_hide['show'],
                                             'hide' => $show_hide['hide']),
 
@@ -282,12 +282,11 @@ class View extends Smarty
                 if (!isset($menu['config']['hide']) || !in_array(self::$_item, $menu['config']['hide'])) {
                     // Verificar si widget está habilitado para esa vista //
                     if ($menu['config']['show'][0]['menu_show'] == 'all' || in_array(self::$_item, $menu['config']['show'][0])) {
-                        if ($menu['config']['habilitado'] == 1) {               
+                        if ($menu['config']['enabled'] == 1) {               
                             // Llenar la posición del Layout //
                             $contenido = $menu['content'];
                             $pos = $menu['config']['position'];
                             $positions[$pos] = $contenido;
-
                         }
                     }
                 }
@@ -298,41 +297,41 @@ class View extends Smarty
 
     }
 
-    public function getMenuItems($idmenu, $vista){
-        $items = $this->_db->query("SELECT * FROM menu_items WHERE idmenu = '$idmenu' AND idpadre = '0'")->fetchall(PDO::FETCH_ASSOC);
+    public function getMenuItems($idmenu, $view){
+        $items = $this->_db->query("SELECT * FROM menu_items WHERE idmenu = '$idmenu' AND parent = '0'")->fetchall(PDO::FETCH_ASSOC);
         $items_final = array();
         foreach ($items as $item) {
-            $tiene_subitems = $this->_db->query("SELECT COUNT(*) AS cantidad FROM menu_items WHERE idmenu = '$idmenu' AND idpadre = '" . $item['idmenuitem'] . "'")->fetchall(PDO::FETCH_ASSOC);
-            $cantidad = intval($tiene_subitems[0]['cantidad']);
-            if($cantidad >= 1){
+            $have_subitems = $this->_db->query("SELECT COUNT(*) AS subitems_count FROM menu_items WHERE idmenu = '$idmenu' AND parent = '" . $item['idmenuitem'] . "'")->fetchall(PDO::FETCH_ASSOC);
+            $have_subitems = intval($have_subitems[0]['subitems_count']);
+            if($have_subitems >= 1){
                 $items_final[$item['idmenuitem']] = array(
                         array(
                         'id' => $item['idmenuitem'],
-                        'titulo' =>  $item['label'],
-                        'enlace' => $item['information'] 
+                        'label' =>  $item['label'],
+                        'link' => $item['information'] 
                         )
                     );
-                $subitems = $this->_db->query("SELECT * FROM menu_items WHERE idmenu = $idmenu AND idpadre = '" . $item['idmenuitem'] . "'")->fetchall(PDO::FETCH_ASSOC);
+                $subitems = $this->_db->query("SELECT * FROM menu_items WHERE idmenu = $idmenu AND parent = '" . $item['idmenuitem'] . "'")->fetchall(PDO::FETCH_ASSOC);
                 foreach ($subitems as $subitem) {
                     $items_final[$item['idmenuitem']][] = array(
                                                             'id' => $subitem['idmenuitem'],
-                                                            'titulo' =>  $subitem['label'],
-                                                            'enlace' => $subitem['information'] 
+                                                            'label' =>  $subitem['label'],
+                                                            'link' => $subitem['information'] 
                                                             );
                 }
             } else {
                 $items_final[$item['idmenuitem']] = array(
                                                     'id' => $item['idmenuitem'],
-                                                    'titulo' =>  $item['label'],
-                                                    'enlace' => $item['information'] 
+                                                    'label' =>  $item['label'],
+                                                    'link' => $item['information'] 
                                                     );
             }
         }
 
-        if(is_readable(ROOT . 'views' . DS . 'themes' . DS . $this->_theme . DS . 'menues' . DS . $vista . '.php')){
+        if(is_readable(ROOT . 'views' . DS . 'themes' . DS . $this->_theme . DS . 'menues' . DS . $view . '.php')){
             ob_start();
             extract($items_final);
-            include ROOT . 'views' . DS . 'themes' . DS . $this->_theme . DS . 'menues' . DS . $vista . '.php';
+            include ROOT . 'views' . DS . 'themes' . DS . $this->_theme . DS . 'menues' . DS . $view . '.php';
             $content = ob_get_contents();
             ob_end_clean();
 
