@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.1.8, created on 2016-01-01 19:47:51
+<?php /* Smarty version Smarty-3.1.8, created on 2016-01-02 15:46:49
          compiled from "D:\Marcio\Programas\xampp_1_8\htdocs\Frameworks\flight_editado\views\themes\default_theme\footer.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:143675686c9d7725b46-06107751%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:243475687e2d96782b3-10424312%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '0600f6bad78e7b25ea3cd027b2ee283b6d2bdf76' => 
     array (
       0 => 'D:\\Marcio\\Programas\\xampp_1_8\\htdocs\\Frameworks\\flight_editado\\views\\themes\\default_theme\\footer.tpl',
-      1 => 1433632082,
+      1 => 1451692959,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '143675686c9d7725b46-06107751',
+  'nocache_hash' => '243475687e2d96782b3-10424312',
   'function' => 
   array (
   ),
@@ -23,9 +23,9 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   ),
   'has_nocache_code' => false,
   'version' => 'Smarty-3.1.8',
-  'unifunc' => 'content_5686c9d781a559_76945713',
+  'unifunc' => 'content_5687e2d96e3046_42122290',
 ),false); /*/%%SmartyHeaderCode%%*/?>
-<?php if ($_valid && !is_callable('content_5686c9d781a559_76945713')) {function content_5686c9d781a559_76945713($_smarty_tpl) {?>        </div> <!-- Content -->
+<?php if ($_valid && !is_callable('content_5687e2d96e3046_42122290')) {function content_5687e2d96e3046_42122290($_smarty_tpl) {?>        </div> <!-- Content -->
 
         <footer class="row">
             <div class="large-12 columns">
@@ -66,9 +66,9 @@ $_smarty_tpl->tpl_vars['js']->_loop = true;
 " type="text/javascript"></script>
             <?php } ?>
         <?php }?>
-        <script src="<?php echo $_smarty_tpl->tpl_vars['_layoutParams']->value['ruta_js'];?>
+        <script src="<?php echo $_smarty_tpl->tpl_vars['_layoutParams']->value['path_js'];?>
 vendor/jquery.js"></script>
-        <script src="<?php echo $_smarty_tpl->tpl_vars['_layoutParams']->value['ruta_js'];?>
+        <script src="<?php echo $_smarty_tpl->tpl_vars['_layoutParams']->value['path_js'];?>
 foundation.min.js"></script>
         <script>
             $(document).foundation();

@@ -11,8 +11,8 @@ class loginController extends Controller
 
     public function index(){
 
-        if (Session::get('autenticado')) {
-            $this->redireccionar();
+        if (Session::get('authenticated')) {
+            $this->redirect();
         }
 
         $this->_view->assign('titulo', 'Iniciar Sesión');
@@ -33,7 +33,7 @@ class loginController extends Controller
                 exit;
             }
 
-            $row = $this->_login->getUsuario(
+            $row = $this->_login->getUser(
                 $this->getAlphaNum('usuario'),
                 $this->getAlphaNum('pass')
             );
@@ -44,19 +44,19 @@ class loginController extends Controller
                 exit;
             }
 
-            if ($row[0]['estado'] != 1) {
+            if ($row[0]['enabled'] != 1) {
                 $this->_view->assign('error',"User no habilitado");
                 $this->_view->render('index','login');
                 exit;
             }
 
-            Session::set('autenticado', true);
+            Session::set('authenticated', true);
             Session::set('level', $row[0]['role']);
-            Session::set('usuario', $row[0]['usuario']);
-            Session::set('idusuario', $row[0]['idusuario']);
-            Session::set('tiempo', time());
+            Session::set('user', $row[0]['user']);
+            Session::set('iduser', $row[0]['iduser']);
+            Session::set('time', time());
 
-            $this->redireccionar();
+            $this->redirect();
 
         }
 
@@ -65,7 +65,7 @@ class loginController extends Controller
 
     public function cerrar(){
         Session::destroy();
-        $this->redireccionar();
+        $this->redirect();
     }
 
 }

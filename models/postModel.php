@@ -7,8 +7,13 @@ class postModel extends Model{
 	}
 
 	public function getPosts(){
-		$posts = $this->_db->query("SELECT v.*, p.* FROM posts_versions v INNER JOIN posts p ON v.idpost = p.idpost WHERE v.show = 1");
+		$posts = $this->_db->query("SELECT v.*, p.* FROM posts_revisions v INNER JOIN posts p ON v.idpost = p.idpost WHERE v.post_show = 1");
 		return $posts->fetchall(PDO::FETCH_ASSOC);
+	}
+
+	public function getPostById($idpost){
+		$post = $this->_db->query("SELECT v.*, p.* FROM posts_revisions v INNER JOIN posts p ON v.idpost = p.idpost WHERE p.idpost = $idpost");
+		return $post->fetch(PDO::FETCH_ASSOC);
 	}
 
 	public function getPost($url){
@@ -17,7 +22,7 @@ class postModel extends Model{
 	}
 
 	public function getContent($url){
-		$post = $this->_db->query("SELECT v.content FROM posts_versions v INNER JOIN posts p ON v.idpost = p.idpost WHERE p.idpost = '$idpost' AND v.show = 1");
+		$post = $this->_db->query("SELECT v.content FROM posts_revisions v INNER JOIN posts p ON v.idpost = p.idpost WHERE p.idpost = '$idpost' AND v.post_show = 1");
 		return $post->fetch();
 	}
 

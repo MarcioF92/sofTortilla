@@ -1,6 +1,6 @@
 ﻿<?php
 
-//ini_set('display_errors',1); // Determina que se muestren los errores
+ini_set('display_errors',1); // Determina que se muestren los errores
 
 define('DS', DIRECTORY_SEPARATOR);
 define('ROOT', realpath(dirname(__FILE__)) . DS); // Ruta raíz de la Appi

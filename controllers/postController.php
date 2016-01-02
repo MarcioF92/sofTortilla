@@ -12,12 +12,9 @@ class postController extends Controller
     public function index($pagina = false){
 
         $this->_view->setJs(array('prueba'));
-        /*for ($i=0; $i < 300; $i++) { 
-           $model = $this->loadModel('post');
-           $model->insertarPost('Titulo ' . $i, 'Cuerpo '. $i);
-        }*/
 
-        if (!$this->filtrarInt($pagina)) {
+
+        if (!$this->filterInt($pagina)) {
             $pagina = false;
         } else {
             $pagina = (int) $pagina;
@@ -34,7 +31,7 @@ class postController extends Controller
     public function nuevo(){
         //Session::accesoEstricto(array('usuario'), true); Tipo de usuario a lo que se le permite
 
-        $this->_acl->acceso('hacer_pete');
+        $this->_acl->access('hacer_pete');
 
         $this->_view->assign('titulo', "Nuevo Post");
         $this->_view->setJsPlugin(array('jquery.validate'));
@@ -43,13 +40,13 @@ class postController extends Controller
         if ($this->getInt('guardar') == 1) { // Revisa si se insertó
             $this->_view->assign('datos', $_POST);
 
-            if(!$this->getTexto('titulo')){ // Name del input
+            if(!$this->getText('titulo')){ // Name del input
                 $this->_view->assign('_error', 'Debe introducir el título del post');
                 $this->_view->render('nuevo', 'post');
                 exit;
             }
 
-             if(!$this->getTexto('cuerpo')){
+             if(!$this->getText('cuerpo')){
                 $this->_view->assign('_error', 'Debe introducir el cuerpo del post');
                 $this->_view->render('nuevo', 'post');
                 exit;
@@ -88,7 +85,7 @@ class postController extends Controller
                 $imagen
                 );
 
-            $this->redireccionar('post');
+            $this->redirect('post');
 
         }
 
@@ -97,60 +94,60 @@ class postController extends Controller
 
     public function editar($id){
 
-         $this->_acl->acceso('editar_post');
+        //$this->_acl->access('editar_post');
 
-        if(!$this->filtrarInt($id)){
-            $this->redireccionar('post');
+        if(!$this->filterInt($id)){
+            $this->redirect('post');
         }
 
-        if(!$this->_post->getUnPost($this->filtrarInt($id))){
-            $this->redireccionar('post');
+        if(!$this->_post->getPostById($this->filterInt($id))){
+            $this->redirect('post');
         }
 
-        $this->_view->titulo = "Editar post";
+        $this->_view->assign('title', "Editar post");
         $this->_view->setJs(array('nuevo'));
 
         if ($this->getInt('guardar') == 1) {
             //$this->_view->datos = $_POST;
 
-            if(!$this->getTexto('titulo')){ // Name del input
-                $this->_view->_error = 'Debe introducir el título del post';
+            if(!$this->getText('title')){ // Name del input
+                $this->_view->assign('title', 'Debe introducir el título del post');
                 $this->_view->render('editar', 'post');
                 exit;
             }
 
-             if(!$this->getTexto('cuerpo')){
-                $this->_view->_error = 'Debe introducir el cuerpo del post';
+             if(!$this->getText('content')){
+                $this->_view->assign('title', 'Debe introducir el cuerpo del post');
                 $this->_view->render('editar', 'post');
                 exit;
             }
 
             $this->_post->editarPost(
-                $this->filtrarInt($id),
-                $this->getPostParam('titulo'), 
-                $this->getPostParam('cuerpo')
+                $this->filterInt($id),
+                $this->getPostParam('title'), 
+                $this->getPostParam('content')
                 );
 
-            $this->redireccionar('post');
+            $this->redirect('post');
         }
 
-        $this->_view->datos = $this->_post->getUnPost($this->filtrarInt($id));
-        $this->_view->render('editar', 'post');
+        $this->_view->assign('post', $this->_post->getPostById($this->filterInt($id)));
+        $this->_view->render('nuevo', 'post');
 
     }
 
     public function eliminar($id){
          Session::acceso('admin'); // Tipo de usuario a lo que se le permite
-        if(!$this->filtrarInt($id)){
-            $this->redireccionar('post');
+        if(!$this->filterInt($id)){
+            $this->redirect('post');
         }
 
-        if(!$this->_post->getUnPost($this->filtrarInt($id))){
-            $this->redireccionar('post');
+        if(!$this->_post->getUnPost($this->filterInt($id))){
+            $this->redirect('post');
         }
 
-        $this->_post->eliminarPost($this->filtrarInt($id));
-        $this->redireccionar('post');
+        $this->_post->eliminarPost($this->filterInt($id));
+        $this->redirect('post');
     }
 
     public function prueba($pagina = false){
@@ -159,7 +156,7 @@ class postController extends Controller
            $model->insertarPrueba('Titulo ' . $i, 'Cuerpo ' . $i, (($i % 2) + 1), (($i % 5) + 1));
         }
 
-        if (!$this->filtrarInt($pagina)) {
+        if (!$this->filterInt($pagina)) {
             $pagina = false;
         } else {
             $pagina = (int) $pagina;

@@ -45,6 +45,7 @@ class View extends Smarty
             $this->_paths['view'] = ROOT . 'views' . DS . $controller . DS;
             $this->_paths['js'] = BASE_URL . '/views/' . $controller . '/js/';
         }
+
     }
 
     public static function getViewId(){
@@ -109,6 +110,7 @@ class View extends Smarty
         $this->assign('_layoutParams', $_params);
 
         $this->display(ROOT . 'views' . DS . 'themes'. DS . $this->_theme . DS . $this->_template . '.tpl');
+        
     }
 
     public function setJs(array $js){

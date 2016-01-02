@@ -10,7 +10,7 @@ class Bootstrap
 		$controller = $petition->getController() . 'Controller'; //Se elije Controlador
 		
 		$method = $petition->getMethod(); // El método que se recibe desde el Request
-		$argumentos = $petition->getArgs(); // Los Argumentos 
+		$args = $petition->getArgs(); // Los Argumentos 
 
 		if ($module) {
 			$rutaModule = ROOT . 'controllers' . DS . $module . 'Controller.php';

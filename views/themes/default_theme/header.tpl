@@ -61,7 +61,7 @@
                     <div id="mensaje">{$_mensaje}</div>
                     {/if}
 
-                    <h2>{$titulo}</h2>
+                    <h2>{$title}</h2>
 
                 </article>
 

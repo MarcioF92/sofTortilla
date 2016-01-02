@@ -32,7 +32,7 @@ class indexController extends Controller
 			$this->_view->assign('post', $post);
 	        $this->_view->render("", $post['idpost']); //Renderiza y manda el nombre de la vista
         } else {
-        	$this->redireccionar('error/not_found');
+        	$this->redirect('error/not_found');
         }	
     }
 

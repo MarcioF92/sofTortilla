@@ -27,8 +27,8 @@
                 <script src="{$js}" type="text/javascript"></script>
             {/foreach}
         {/if}
-        <script src="{$_layoutParams.ruta_js}vendor/jquery.js"></script>
-        <script src="{$_layoutParams.ruta_js}foundation.min.js"></script>
+        <script src="{$_layoutParams.path_js}vendor/jquery.js"></script>
+        <script src="{$_layoutParams.path_js}foundation.min.js"></script>
         <script>
             $(document).foundation();
         </script>

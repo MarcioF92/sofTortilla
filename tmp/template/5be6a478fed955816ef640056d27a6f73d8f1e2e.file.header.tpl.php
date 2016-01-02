@@ -1,46 +1,43 @@
-<?php /* Smarty version Smarty-3.1.8, created on 2016-01-01 19:49:30
-         compiled from "D:\Marcio\Programas\xampp_1_8\htdocs\Frameworks\flight_editado\views\themes\default_theme\post_header.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:139455686c9d74eac44-64863103%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /* Smarty version Smarty-3.1.8, created on 2016-01-02 15:47:19
+         compiled from "D:\Marcio\Programas\xampp_1_8\htdocs\Frameworks\flight_editado\views\themes\default_theme\header.tpl" */ ?>
+<?php /*%%SmartyHeaderCode:235005687e2d94fce14-96180481%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
-    '12ec5f62819491969e8193939c1c6beecd4d2897' => 
+    '5be6a478fed955816ef640056d27a6f73d8f1e2e' => 
     array (
-      0 => 'D:\\Marcio\\Programas\\xampp_1_8\\htdocs\\Frameworks\\flight_editado\\views\\themes\\default_theme\\post_header.tpl',
-      1 => 1451674167,
+      0 => 'D:\\Marcio\\Programas\\xampp_1_8\\htdocs\\Frameworks\\flight_editado\\views\\themes\\default_theme\\header.tpl',
+      1 => 1451746037,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '139455686c9d74eac44-64863103',
+  'nocache_hash' => '235005687e2d94fce14-96180481',
   'function' => 
   array (
   ),
   'version' => 'Smarty-3.1.8',
-  'unifunc' => 'content_5686c9d7670ab0_40339564',
+  'unifunc' => 'content_5687e2d95c70b2_55910005',
   'variables' => 
   array (
-    'post' => 0,
+    'titulo' => 0,
     '_layoutParams' => 0,
     'js' => 0,
     'widgets' => 0,
     'tp' => 0,
     'menues' => 0,
+    '_error' => 0,
+    '_mensaje' => 0,
+    'title' => 0,
   ),
   'has_nocache_code' => false,
 ),false); /*/%%SmartyHeaderCode%%*/?>
-<?php if ($_valid && !is_callable('content_5686c9d7670ab0_40339564')) {function content_5686c9d7670ab0_40339564($_smarty_tpl) {?><!DOCTYPE html>
+<?php if ($_valid && !is_callable('content_5687e2d95c70b2_55910005')) {function content_5687e2d95c70b2_55910005($_smarty_tpl) {?><!DOCTYPE html>
 <!--[if IE 9]><html class="lt-ie10" lang="en" > <![endif]-->
 <html class="no-js" lang="es" >
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="<?php echo (($tmp = @$_smarty_tpl->tpl_vars['post']->value['description'])===null||$tmp==='' ? $_smarty_tpl->tpl_vars['_layoutParams']->value['configs']['app_slogan'] : $tmp);?>
-">
-        <meta name="keywords" content="<?php echo $_smarty_tpl->tpl_vars['post']->value['keywords'];?>
-">
-        <meta name="author" content="<?php echo $_smarty_tpl->tpl_vars['post']->value['author'];?>
-">
-        <title><?php echo (($tmp = @$_smarty_tpl->tpl_vars['post']->value['title'])===null||$tmp==='' ? "Sin titulo" : $tmp);?>
+        <title><?php echo (($tmp = @$_smarty_tpl->tpl_vars['titulo']->value)===null||$tmp==='' ? "Sin titulo" : $tmp);?>
 </title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
         <link href="<?php echo $_smarty_tpl->tpl_vars['_layoutParams']->value['path_css'];?>
@@ -100,4 +97,31 @@ $_smarty_tpl->tpl_vars['tp']->_loop = true;
                 </ul>
               </section>
             </nav>
+        </div>
+
+        <div class="row">
+     
+            <div class="large-9 columns" role="content">
+         
+                <article>
+
+                    <noscript><p>Para el correcto funcionamiento debe tener el soporte de javascript habilitado</p></noscript>
+                    
+                    <?php if (isset($_smarty_tpl->tpl_vars['_error']->value)){?>
+                    <div id="error"><?php echo $_smarty_tpl->tpl_vars['_error']->value;?>
+</div>
+                    <?php }?>
+
+                    <?php if (isset($_smarty_tpl->tpl_vars['_mensaje']->value)){?>
+                    <div id="mensaje"><?php echo $_smarty_tpl->tpl_vars['_mensaje']->value;?>
+</div>
+                    <?php }?>
+
+                    <h2><?php echo $_smarty_tpl->tpl_vars['title']->value;?>
+</h2>
+
+                </article>
+
+            </div>
+
         </div><?php }} ?>

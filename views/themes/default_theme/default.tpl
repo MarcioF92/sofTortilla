@@ -8,7 +8,7 @@ Template Name: Default
      
         <div class="large-9 columns" role="content">
 
-            {include file=$_contenido}
+            {include file=$_content}
 
         </div>
 
@@ -19,7 +19,5 @@ Template Name: Default
         {include file="sidebar.tpl"}
 
     </aside>
-
-        
 
 {include file="footer.tpl"}
