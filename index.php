@@ -19,7 +19,10 @@ try{
 	$registry->_db = new Database(DB_HOST, DB_NAME, DB_USER, DB_PASS, DB_CHAR);
 	$registry->_acl = new Acl();
 
-	Bootstrap::run ($registry->_request);
+	$ddb = new Doctrine($registry->_request, DB_USER, DB_PASS, DB_HOST, DB_NAME);
+	$registry->_em = $ddb->getEm();
+
+	Bootstrap::run($registry->_request);
 }
 	catch(Exception $e){
 		$e->getMessage();

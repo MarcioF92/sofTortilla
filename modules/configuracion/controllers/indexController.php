@@ -1,6 +1,6 @@
 <?php
 
-class indexController extends configuracionController
+class indexController extends Controller
 {
 
     public function __construct()

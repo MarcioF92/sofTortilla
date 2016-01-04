@@ -12,25 +12,31 @@ class Bootstrap
 		$method = $petition->getMethod(); // El método que se recibe desde el Request
 		$args = $petition->getArgs(); // Los Argumentos 
 
-		if ($module) {
-			$rutaModule = ROOT . 'controllers' . DS . $module . 'Controller.php';
+		if (isset($module)){
+			if (isset($controller)) {
+				$pathModuleController = ROOT . 'modules' . DS . $module . DS . 'controllers' . DS . $controller . '.php';
+			} else {
+				$pathModuleController = ROOT . 'modules' . DS . $module . DS . 'controllers' . DS . 'indexController.php';
+			}
 
-			if (is_readable($rutaModule)) {
-				require_once $rutaModule;
-				$rutaController = ROOT . 'modules' . DS . $module . DS . 'controllers' . DS . $controller . '.php';
+			if (is_readable($pathModuleController)) {
+				require_once $pathModuleController;
+				
 			} else {
 				throw new Exception('Error de base de modelo');
 			}
+
 		} else {
-			$rutaController = ROOT . 'controllers' . DS . $controller . '.php'; // La ruta al mismo
+
+			throw new Exception('Error de base de modelo');
 		}
 
-		if(is_readable($rutaController)){ // Verifica si el archivo existe y si es válido
+		/*if(is_readable($rutaController)){ // Verifica si el archivo existe y si es válido
 			require_once $rutaController;
 		} else {
 			$controller = 'indexController';
 			require_once ROOT . 'controllers' . DS . 'indexController.php'; // Sino se encuentra, sale excepción
-		}
+		}*/
 
 			$controller = new $controller;
 
@@ -40,6 +46,7 @@ class Bootstrap
 			} else {
 				$method = 'index';
 			}
+
 
 			/* Si recibe los argumentos, los manda*/
 

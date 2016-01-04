@@ -35,14 +35,15 @@ class Request
  
             $this->_module = strtolower(array_shift($url));
 
+
             if (!$this->_module) {
-                $this->_module = false;
+                $this->_module = DEFAULT_MODULE;
             } else {
                 if (count($this->_modules)) {
                     if (!in_array($this->_module, $this->_modules)) {                        
-                        $this->_controller = $this->_module;
-                        $this->_module = false;
-                    } else {
+                        //$this->_controller = $this->_module;
+                        $this->_module = DEFAULT_MODULE;
+                    } /*else {
                         $row = $this->_db->query("SELECT * FROM modules WHERE folder = '$this->_module'")->fetch();
                         if($row['enable'] == 1 || $this->_module == 'configuracion'){
                             $this->_controller = strtolower(array_shift($url)); // Tomamos la segunda posición del array como controlador
@@ -53,15 +54,17 @@ class Request
 
                         } else {
                             $this->_controller = 'index';
-                            $this->_module = false;
+                            $this->_module = DEFAULT_MODULE;
                         }
-                    }
+
+                    }*/
                 } else {
-                    $this->_controller = $this->_module;
-                    $this->_module = false;
+                    //$this->_controller = $this->_module;
+                    $this->_module = DEFAULT_MODULE; //Debería haber una página de error en la que no hay módulos
                 }
             }
 
+            $this->_controller = strtolower(array_shift($url));
             $this->_method = strtolower(array_shift($url)); // Toma la segunda como método
             $this->_args = $url; // Los argumentos de la URL
             
@@ -69,6 +72,10 @@ class Request
 
         /* Si no existen controlador, método y argumentos, se utilizan los por defectos*/
 
+        if(!$this->_module){
+            $this->_module = DEFAULT_MODULE;
+        }
+        
         if(!$this->_controller){
             $this->_controller = DEFAULT_CONTROLLER;
         }

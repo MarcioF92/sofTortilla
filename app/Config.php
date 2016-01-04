@@ -6,6 +6,7 @@
  */ 
 define('BASE_URL', 'http://localhost/Frameworks/flight_editado/'); // Archivos para incluir la vista en base del usuario
 define('DEFAULT_CONTROLLER', 'index'); // Controlador por defecto
+define('DEFAULT_MODULE', 'home'); // Controlador por defecto
 define('DEFAULT_LAYOUT', 'default'); // Layout por defecto
 define('DEFAULT_THEME', 'default_theme'); // Layout por defecto
  

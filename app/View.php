@@ -4,6 +4,7 @@
 
 require_once ROOT . 'libs' . DS .'smarty' . DS . 'libs' . DS . 'Smarty.class.php';
 
+
 class View extends Smarty
 {
     private $_request;
@@ -96,8 +97,8 @@ class View extends Smarty
                     $this->display($this->_paths['view'] . $view . '.tpl');
                     exit;
                 }
-
                 $this->assign('_content', $this->_paths['view'] . $view . '.tpl');
+
             } 
             else {
                 throw new Exception('Error de vista');
