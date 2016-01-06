@@ -12,6 +12,7 @@ class indexController extends Controller
  
     public function index()
     {	
+
     	$this->_view->setTemplate('page');
     	$url = filter_input(INPUT_GET, 'url', FILTER_SANITIZE_URL); // Si existe URL, se eliminan todos los caracteres no permitidos 
         $url = explode('/', $url); // Crea Array y divide URL, separando elementos por barras queda de la forma controlador/metodo/argumento
@@ -33,7 +34,8 @@ class indexController extends Controller
 	        $this->_view->render("", $post['idpost']); //Renderiza y manda el nombre de la vista
         } else {
         	$this->redirect('error/not_found');
-        }	
+        }
+
     }
 
 }

@@ -1,0 +1,3 @@
+Vista desde Smarty...
+
+{$prueba_lang}

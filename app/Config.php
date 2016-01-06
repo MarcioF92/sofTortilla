@@ -9,6 +9,12 @@ define('DEFAULT_CONTROLLER', 'index'); // Controlador por defecto
 define('DEFAULT_MODULE', 'home'); // Controlador por defecto
 define('DEFAULT_LAYOUT', 'default'); // Layout por defecto
 define('DEFAULT_THEME', 'default_theme'); // Layout por defecto
+
+/**
+ * Configuración Lenguaje
+ */
+define('DEFAULT_LANGUAJE', 'en');
+define('LANGUAJE_EXT', 'ini');
  
 /**
  * Nombre del Framework

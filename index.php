@@ -22,6 +22,10 @@ try{
 	$ddb = new Doctrine($registry->_request, DB_USER, DB_PASS, DB_HOST, DB_NAME);
 	$registry->_em = $ddb->getEm();
 
+	$registry->_i18n = new I18nator(ROOT . 'libs/i18n/lang/lang_{LANGUAGE}.' . LANGUAJE_EXT, ROOT . 'libs/i18n/langcache/', DEFAULT_LANGUAJE);
+
+	$registry->_i18n->init();
+
 	Bootstrap::run($registry->_request);
 }
 	catch(Exception $e){
