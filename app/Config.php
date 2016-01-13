@@ -13,7 +13,7 @@ define('DEFAULT_THEME', 'default_theme'); // Layout por defecto
 /**
  * Configuración Lenguaje
  */
-define('DEFAULT_LANGUAJE', 'en');
+define('DEFAULT_LANGUAJE', 'es');
 define('LANGUAJE_EXT', 'ini');
  
 /**

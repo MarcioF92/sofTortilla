@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.8, created on 2016-01-02 15:47:19
+<?php /* Smarty version Smarty-3.1.8, created on 2016-01-13 23:36:28
          compiled from "D:\Marcio\Programas\xampp_1_8\htdocs\Frameworks\flight_editado\views\themes\default_theme\header.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:235005687e2d94fce14-96180481%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '5be6a478fed955816ef640056d27a6f73d8f1e2e' => 
     array (
       0 => 'D:\\Marcio\\Programas\\xampp_1_8\\htdocs\\Frameworks\\flight_editado\\views\\themes\\default_theme\\header.tpl',
-      1 => 1451746037,
+      1 => 1452724586,
       2 => 'file',
     ),
   ),
@@ -117,8 +117,8 @@ $_smarty_tpl->tpl_vars['tp']->_loop = true;
 </div>
                     <?php }?>
 
-                    <h2><?php echo $_smarty_tpl->tpl_vars['title']->value;?>
-</h2>
+                    <h2><?php if (isset($_smarty_tpl->tpl_vars['title']->value)){?><?php echo $_smarty_tpl->tpl_vars['title']->value;?>
+<?php }?></h2>
 
                 </article>
 

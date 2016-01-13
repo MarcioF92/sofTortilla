@@ -129,6 +129,10 @@ abstract class Controller
     public function dataController(){
         return $this->_data;
     }
+
+    public function getI18nValue($name, $args = false){
+        return vsprintf(constant("L::" . $name), $args);
+    }
 }
 
 

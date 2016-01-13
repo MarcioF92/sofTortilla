@@ -61,7 +61,7 @@
                     <div id="mensaje">{$_mensaje}</div>
                     {/if}
 
-                    <h2>{$title}</h2>
+                    <h2>{if isset($title)}{$title}{/if}</h2>
 
                 </article>
 
