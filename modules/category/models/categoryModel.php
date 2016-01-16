@@ -7,6 +7,7 @@ class categoryModel extends Model{
 	}
 
 	public function insertCategory($newProductName){
+
 		$product = new Category();
 		$product->setCategory($newProductName);
 

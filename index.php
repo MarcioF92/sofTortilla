@@ -6,8 +6,6 @@ define('DS', DIRECTORY_SEPARATOR);
 define('ROOT', realpath(dirname(__FILE__)) . DS); // Ruta raíz de la Appi
 define('APP_PATH', ROOT . 'app' . DS );
 
-
-
 try{
 	require_once APP_PATH . 'Autoload.php';
 	require_once APP_PATH . 'Config.php';
@@ -20,7 +18,10 @@ try{
 	$registry->_acl = new Acl();
 
 	$ddb = new Doctrine($registry->_request, DB_USER, DB_PASS, DB_HOST, DB_NAME);
+	$ddb->registerEntities();
+
 	$registry->_em = $ddb->getEm();
+
 
 	$registry->_i18n = new I18nator(ROOT . 'libs/i18n/lang/lang_{LANGUAGE}.' . LANGUAJE_EXT, ROOT . 'libs/i18n/langcache/', DEFAULT_LANGUAJE);
 

@@ -1,5 +1,5 @@
 <?php
-// src/Product.php
+
 /**
  * @Entity @Table(name="categories")
  **/

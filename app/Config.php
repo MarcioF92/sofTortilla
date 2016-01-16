@@ -42,10 +42,10 @@ define('HASH_KEY', '53a61b4c4f911');
  * Cambiar estos datos de conexión por los correspondientes
  * a nuestro host, usuario, contraseña, nombre y codificación
  */
-define('DB_HOST', 'localhost');
-define('DB_USER', 'flight_dbusr');
-define('DB_PASS', 'fl1ght2$16');
-define('DB_NAME', 'flight');
-define('DB_CHAR', 'utf8');
+define('DB_HOST', "localhost");
+define('DB_USER', "flight_dbusr");
+define('DB_PASS', "fl1ght2$16");
+define('DB_NAME', "flight");
+define('DB_CHAR', "utf8");
 
 ?>
