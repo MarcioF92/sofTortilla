@@ -6,7 +6,7 @@
  **/
 class User{
     /** @Id @Column(type="integer") @GeneratedValue **/
-    private $iduser;
+    private $id;
 
     /** @Column(type="string", length=30) **/
     private $name;
@@ -21,7 +21,7 @@ class User{
     private $email;
 
     /**
-     * @ManyToOne(targetEntity="Role")
+     * @ManyToOne(targetEntity="roles")
      * @JoinColumn(name="role", referencedColumnName="idrole")
      */
     private $role;
@@ -35,8 +35,8 @@ class User{
     /** @Column(type="integer") **/
     private $code;
 
-    public function getIduser(){
-        return $this->iduser;
+    public function getId(){
+        return $this->id;
     }
 
     public function getName(){

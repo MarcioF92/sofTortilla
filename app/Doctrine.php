@@ -34,10 +34,10 @@ class Doctrine{
 		// the connection configuration
 		$dbParams = array(
 		    'driver'   => 'pdo_mysql',
-		    'user'     => 'root',
-		    'password' => 'overflow14',
-		    'dbname'   => 'flight',
-		    'host'		=> 'localhost'
+		    'user'     => $db_usr,
+		    'password' => $db_pass,
+		    'dbname'   => $db_name,
+		    'host'		=> $db_host
 		);
 
 		$config = Setup::createAnnotationMetadataConfiguration($paths, $isDevMode);

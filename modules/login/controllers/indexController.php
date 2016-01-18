@@ -32,27 +32,28 @@ class indexController extends Controller
                 exit;
             }
 
-            $row = $this->_login->getUser(
+            $user = $this->_login->getUser(
                 $this->getAlphaNum('usuario'),
                 $this->getAlphaNum('pass')
             );
 
-            if (!$row) {
+            if (!$user) {
                 $this->_view->assign('error',"User y/o Pass incorrectos");
                 $this->_view->render('index','login');
                 exit;
             }
 
-            if ($row[0]['enabled'] != 1) {
+            if ($user->getEnabled() != 1) {
                 $this->_view->assign('error',"User no habilitado");
                 $this->_view->render('index','login');
                 exit;
             }
 
+            //Despues tratar de meter el $user en el Session
             Session::set('authenticated', true);
-            Session::set('level', $row[0]['role']);
-            Session::set('user', $row[0]['user']);
-            Session::set('iduser', $row[0]['iduser']);
+            Session::set('level', $user->getRole()->getIdrole());
+            Session::set('user', $user->getUser());
+            Session::set('iduser', $user->getIduser());
             Session::set('time', time());
 
             $this->redirect();

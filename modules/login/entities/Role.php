@@ -1,17 +1,18 @@
 <?php
 
 /**
+ * @author Marcio Fuentes
  * @Entity @Table(name="roles")
  **/
 class Role{
     /** @Id @Column(type="integer") @GeneratedValue **/
-    private $idRole;
+    private $idrole;
 
     /** @Column(type="string", length=100) **/
     private $name;
 
-    public function getIdUser(){
-        return $this->idUser;
+    public function getIdrole(){
+        return $this->idrole;
     }
 
     public function getName(){

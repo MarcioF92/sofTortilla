@@ -12,11 +12,8 @@ class loginModel extends Model{
     }*/
 
     public function getUser($user, $password){
-		echo ROOT . 'modules' . DS . 'login' . DS . 'entities' . DS . 'User';
-        $user = $this->_em->getRepository('User');
-        
-		/*$user = $repository->findOneBy(array('category' => 'Nombre Category'));
-		$user = $repository->findOneBy(array('user' => $user, 'password' => Hash::getHash('sha1',$password, HASH_KEY)));*/
+        //$user = $this->_em->getRepository('User')->findBy(array('user' => $user));
+        $user = $this->_em->getRepository('User')->findOneBy(array('user' => $user, 'password' => Hash::getHash('sha1',$password, HASH_KEY)));
         return $user;
     }
 
