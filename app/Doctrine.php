@@ -15,18 +15,7 @@ class Doctrine{
 
 		if (isset($module)){
 			$this->_path = ROOT . 'modules' . DS . $module . DS . 'entities' . DS;
-			//$this->_path = BASE_URL . 'modules/' . $module . '/entities';
 		}
-
-		/*// Create a simple "default" Doctrine ORM configuration for Annotations
-		$isDevMode = false;
-		$config = Setup::createAnnotationMetadataConfiguration(array($this->_path), $isDevMode);
-
-		$connectionParams = array(
-		    'url' => "mysql://$db_usr:$db_pass@$db_host/$db_name",
-		);
-
-		$conn = \Doctrine\DBAL\DriverManager::getConnection($connectionParams, $config);*/
 
 		$paths = array($this->_path);
 		$isDevMode = true;
@@ -45,6 +34,7 @@ class Doctrine{
 		// Obtaining the entity manager
 		$this->_em = EntityManager::create($dbParams, $config);
 
+		$this->registerEntities();
 	}
 
 	public function getEm(){

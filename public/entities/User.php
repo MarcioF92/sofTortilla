@@ -35,6 +35,19 @@ class User{
     /** @Column(type="integer") **/
     private $code;
 
+    /**
+     * @ManyToMany(targetEntity="Permission")
+     * @JoinTable(name="permissions_user",
+     *      joinColumns={@JoinColumn(name="iduser", referencedColumnName="iduser")},
+     *      inverseJoinColumns={@JoinColumn(name="idpermission", referencedColumnName="idpermission")}
+     *      )
+     */
+    private $permissions;
+
+    public function __construct() {
+        $this->permissions = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
     public function getIduser(){
         return $this->iduser;
     }
@@ -101,6 +114,14 @@ class User{
 
     public function setCode($code){
         $this->code = $code;
+    }
+
+    public function getPermissions(){
+        return $this->permissions;
+    }
+
+    public function setPermission($permission){
+        $this->permissions->add($permission);
     }
 
 }

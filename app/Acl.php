@@ -21,6 +21,9 @@ class Acl
 
 		$this->_registry = Registry::getInstance();
 		$this->_db = $this->_registry->_db;
+
+		$this->_em = $this->_registry->_em;
+
 		$this->_idrole = $this->getRole();
 		$this->_permissions = $this->getPermissionsRole();
 		$this->compileAcl();

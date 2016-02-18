@@ -11,23 +11,23 @@ define('DEFAULT_LAYOUT', 'default'); // Layout por defecto
 define('DEFAULT_THEME', 'default_theme'); // Layout por defecto
 
 /**
- * Configuración Lenguaje
+ * Configuración i18n
  */
 define('DEFAULT_LANGUAJE', 'es');
 define('LANGUAJE_EXT', 'ini');
  
 /**
- * Nombre del Framework
+ * Nombre de la App
  */ 
 define('APP_NAME', 'SoftTortilla Framework');
 
 /**
- * Slogan o descripción del Frame
+ * Slogan o descripción de la app
  */ 
 define('APP_SLOGAN', 'El Framework de los pibe');
  
 /**
- * CopyRight de nuestro site
+ * Copyright de nuestro site
  */ 
 define('APP_COMPANY', 'Marcio Fuentes');
 
@@ -36,6 +36,9 @@ define('APP_COMPANY', 'Marcio Fuentes');
  */
 define('SESSION_TIME', 30);
 
+/**
+ * Hash para encriptación de contraseñas
+ */
 define('HASH_KEY', '53a61b4c4f911');
 
 /**

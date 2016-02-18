@@ -2,11 +2,11 @@
 
 class indexController extends Controller
 {
-    private $_login;
+    private $_loginModel;
 
     public function __construct(){
         parent::__construct();
-        $this->_login = $this->loadModel('login');
+        $this->_loginModel = $this->loadModel('login');
     }
 
     public function index(){
@@ -32,7 +32,7 @@ class indexController extends Controller
                 exit;
             }
 
-            $user = $this->_login->getUser(
+            $user = $this->_loginModel->getUser(
                 $this->getAlphaNum('usuario'),
                 $this->getAlphaNum('pass')
             );

@@ -27,11 +27,6 @@ class Request
                        $this->_modules[] = $file;
                 }
             }
-
-            $this->_db = new Database(DB_HOST, DB_NAME, DB_USER, DB_PASS, DB_CHAR);
-
-            // 1. Modulo, controlador, métodos argumentos
-            // 2. Controlador, método, argumentos
  
             $this->_module = strtolower(array_shift($url));
 
@@ -41,25 +36,9 @@ class Request
             } else {
                 if (count($this->_modules)) {
                     if (!in_array($this->_module, $this->_modules)) {                        
-                        //$this->_controller = $this->_module;
                         $this->_module = DEFAULT_MODULE;
-                    } /*else {
-                        $row = $this->_db->query("SELECT * FROM modules WHERE folder = '$this->_module'")->fetch();
-                        if($row['enable'] == 1 || $this->_module == 'configuracion'){
-                            $this->_controller = strtolower(array_shift($url)); // Tomamos la segunda posición del array como controlador
-
-                            if (!$this->_controller) {
-                                $this->_controller = 'index';
-                            }
-
-                        } else {
-                            $this->_controller = 'index';
-                            $this->_module = DEFAULT_MODULE;
-                        }
-
-                    }*/
+                    } 
                 } else {
-                    //$this->_controller = $this->_module;
                     $this->_module = DEFAULT_MODULE; //Debería haber una página de error en la que no hay módulos
                 }
             }

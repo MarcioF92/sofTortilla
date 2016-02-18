@@ -25,9 +25,16 @@ function autoloadWidgets($class){
 	} 
 }
 
+function autoloadPublicEntities($class){
+	if (file_exists(ROOT . 'public' . DS . 'entities' . DS . $class . '.php')) {
+		echo ROOT . 'public' . DS . 'entities' . DS . $class . '.php<br>';
+		include_once ROOT . 'public' . DS . 'entities' . DS . $class . '.php';
+	} 
+}
+
 spl_autoload_register("autoloadCore");
 spl_autoload_register("autoloadLibs");
 spl_autoload_register("autoloadControllers");
 spl_autoload_register("autoloadWidgets");
-
+spl_autoload_register("autoloadPublicEntities");
 ?>

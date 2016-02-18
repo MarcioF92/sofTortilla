@@ -2,14 +2,17 @@
 
 /**
  * @author Marcio Fuentes
- * @Entity @Table(name="roles")
+ * @Entity @Table(name="permissions")
  **/
-class Role{
+class Permission{
     /** @Id @Column(type="integer") @GeneratedValue **/
-    private $idrole;
+    private $idpermission;
 
     /** @Column(type="string", length=100) **/
     private $name;
+
+    /** @Column(type="string", length=100) **/
+    private $permission_key ;
 
     public function getIdrole(){
         return $this->idrole;
@@ -21,6 +24,14 @@ class Role{
 
     public function setName($name){
         $this->name = $name;
+    }
+
+    public function getPermissionKey(){
+        return $this->name;
+    }
+
+    public function setPermissionKey($permission_key){
+        $this->permission_key = $permission_key;
     }
  }
 
