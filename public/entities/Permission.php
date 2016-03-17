@@ -12,10 +12,10 @@ class Permission{
     private $name;
 
     /** @Column(type="string", length=100) **/
-    private $permission_key ;
+    private $permission_key;
 
-    public function getIdrole(){
-        return $this->idrole;
+    public function getIdPermission(){
+        return $this->idpermission;
     }
 
     public function getName(){
@@ -27,7 +27,7 @@ class Permission{
     }
 
     public function getPermissionKey(){
-        return $this->name;
+        return $this->permission_key;
     }
 
     public function setPermissionKey($permission_key){

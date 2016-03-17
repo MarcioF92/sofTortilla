@@ -14,7 +14,7 @@ class usuariosController extends Controller
     public function index()
     {
 
-        $this->_acl->acceso('usuarios');
+        $this->_acl->access('usuarios');
         $this->_view->setJs(array('prueba'));
         $this->_view->assign('titulo', 'Usuarios');
         $this->_view->assign('usuarios', $this->_usuarios->getUsuarios());

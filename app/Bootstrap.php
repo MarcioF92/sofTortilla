@@ -31,13 +31,6 @@ class Bootstrap
 			throw new Exception('Error de base de modelo');
 		}
 
-		/*if(is_readable($rutaController)){ // Verifica si el archivo existe y si es válido
-			require_once $rutaController;
-		} else {
-			$controller = 'indexController';
-			require_once ROOT . 'controllers' . DS . 'indexController.php'; // Sino se encuentra, sale excepción
-		}*/
-
 			$controller = new $controller;
 
 			/* Si el método no es válido, se establece Index */

@@ -1,13 +1,14 @@
 <?php
 
-class accessController extends Controller
-{
+class accessController extends Controller{
 
     public function __construct(){
         parent::__construct();
     }
 
-    public function index($codigo){
+    public function index(){}
+
+    public function error($codigo){
         $this->_view->assign('titulo', 'Error');
         $this->_view->assign('_error', $this->_getError($codigo));
         $this->_view->render('access', 'error');

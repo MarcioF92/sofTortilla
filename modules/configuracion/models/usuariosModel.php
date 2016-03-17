@@ -8,7 +8,7 @@ class usuariosModel extends Model
 	}
 
 	public function getUsuarios(){
-		$usuarios = $this->_db->query("SELECT u.*, r.role FROM usuarios u, roles r WHERE u.role = r.idrole");
+		$usuarios = $this->_db->query("SELECT u.*, r.idrole FROM users u, roles r WHERE u.role = r.idrole");
 		return $usuarios->fetchAll(PDO::FETCH_ASSOC);
 	}
 

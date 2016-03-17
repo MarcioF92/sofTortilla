@@ -27,7 +27,6 @@ function autoloadWidgets($class){
 
 function autoloadPublicEntities($class){
 	if (file_exists(ROOT . 'public' . DS . 'entities' . DS . $class . '.php')) {
-		echo ROOT . 'public' . DS . 'entities' . DS . $class . '.php<br>';
 		include_once ROOT . 'public' . DS . 'entities' . DS . $class . '.php';
 	} 
 }
