@@ -15,6 +15,8 @@ define('DEFAULT_THEME', 'default_theme'); // Layout por defecto
  */
 define('DEFAULT_LANGUAJE', 'es');
 define('LANGUAJE_EXT', 'ini');
+date_default_timezone_set('America/Argentina/Buenos_Aires');
+
  
 /**
  * Nombre de la App

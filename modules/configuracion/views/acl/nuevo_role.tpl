@@ -4,7 +4,7 @@
     <input type="hidden" name="guardar" value="1" />
     
     <p>
-        Role: <input type="text" name="role" value="{$datos.role|default:""}" />
+        Role: <input type="text" name="role" value="{if isset($role)}{$role->getName()}{/if}" />
     </p>
     
     <p>

@@ -3,7 +3,6 @@
 class Acl
 {
 	private $_registry;
-	private $_db;
 	private $_iduser;
 	private $_user;
 	private $_idrole;
@@ -12,12 +11,11 @@ class Acl
 	public function __construct($id = false){
 
 		$this->_registry = Registry::getInstance();
-		$this->_db = $this->_registry->_db;
 
 		$this->_em = $this->_registry->_em;
 
 		if($id){
-			$this->_iduser = (int) $id;
+			$this->_iduser = (Int) $_iduser;
 		} else {
 			if(Session::get('iduser')){
 				$this->_iduser = Session::get('iduser');
@@ -81,38 +79,24 @@ class Acl
 	}
 
 	public function getPermissonsUser(){
-		$ids = $this->getPermissionsRoleId();
-
-		$permissions = [];
-
-		if (count($ids)) {
-		
-			$permissions = $this->_db->query("SELECT * FROM permissions_user WHERE iduser = {$this->_iduser} AND idpermission in (" . implode(",", $ids) . ")");
-
-			$permissions = $permissions->fetchAll(PDO::FETCH_ASSOC);
-		}
+		$permissions = $this->_user->getRole()->getPermissions();
 
 		$data = array();
 
-		for ($i=0; $i < count($permissions); $i++) {
-			$key = $this->getPermissionKey($permissions[$i]['idpermission']);
+		foreach ($permissions as $permission) {
+			$key = $permission->getPermissionKey();
 			if ($key == '') {
 				continue;
 			}
 
-			if ($permissions[$i]['value'] == 1) {
-				$v = true;
-			} else {
-				$v = false;
-			}
-
 			$data[$key] = array(
 				'key' => $key,
-				'permission' => $this->getPermissionName($permissions[$i]['idpermission']),
-				'value' => $v,
+				'permision' => $permission->getName(),
+				'value' => true,
 				'inherited' => false,
-				'idpermission' => $permissions[$i]['idpermission']
+				'idpermission' => $permission->getIdPermission()
 			);
+
 		}
 
 		return $data;

@@ -10,7 +10,11 @@ try{
 	require_once APP_PATH . 'Autoload.php';
 	require_once APP_PATH . 'Config.php';
 
+
+
 	Session::init();
+
+
 
 	$registry = Registry::getInstance();
 	
@@ -22,16 +26,18 @@ try{
 
 	$registry->_em = $ddb->getEm();
 
+
+
 	$registry->_i18n = new I18nator(ROOT . 'libs/i18n/lang/lang_{LANGUAGE}.' . LANGUAJE_EXT, ROOT . 'libs/i18n/langcache/', DEFAULT_LANGUAJE);
 	$registry->_i18n->setForcedLang(DEFAULT_LANGUAJE);
 	$registry->_i18n->init();
 
 	$registry->_acl = new Acl();
-	
+
 	Bootstrap::run($registry->_request);
 }
 	catch(Exception $e){
 		$e->getMessage();
-}
+	}
 
 ?>

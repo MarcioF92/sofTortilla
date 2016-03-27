@@ -1,19 +1,17 @@
-<h2>Usuarios</h2>
-
-{if isset($usuarios) && count($usuarios)}
+{if isset($users) && count($users)}
     <table>
         <tr><td>ID</td>
             <td>Usuario</td>
             <td>Role</td>
             <td></td>
         </tr>
-        {foreach from=$usuarios item=us}
+        {foreach from=$users item=user}
         <tr>
-            <td>{$us.idusuario}</td>
-            <td>{$us.usuario}</td>
-            <td>{$us.role}</td>
+            <td>{$user->getIduser()}</td>
+            <td>{$user->getUser()}</td>
+            <td>{$user->getRole()->getName()}</td>
             <td>
-                <a href="{$_layoutParams.root}configuracion/usuarios/permisos/{$us.idusuario}">
+                <a href="{$_layoutParams.root}configuracion/usuarios/permisos/{$user->getIduser()}">
                    Permisos
                 </a>
             </td>
@@ -22,3 +20,5 @@
         {/foreach}
     </table>
 {/if}
+
+<a href="{$_layoutParams.root}configuracion/usuarios/add_user">Agregar Usuario</a>

@@ -8,8 +8,8 @@ class aclModel extends Model
 	}
 
 	public function getRole($idrole){
-		$role = $this->_db->query("SELECT * FROM roles WHERE idrole = $idrole");
-		return $role->fetch();
+		$role = $this->_em->getRepository('Role')->find($idrole);
+		return $role;
 	}
 
 	public function getNombreRole($idrole){
@@ -20,8 +20,8 @@ class aclModel extends Model
 	}	
 
 	public function getRoles(){
-		$role = $this->_db->query("SELECT * FROM roles");
-		return $role->fetchAll();
+		$roles = $this->_em->getRepository('Role')->findAll();
+		return $roles;
 	}
 
 	public function getPermisosAll(){
@@ -79,9 +79,7 @@ class aclModel extends Model
 		return $data;
 	}
 
-	public function eliminarPermisoRole($idrole, $idpermiso){
-		$this->_db->query("DELETE FROM permisos_role WHERE idrole = $idrole AND idpermiso = $idpermiso");
-	}
+
 
 	public function editarPermisoRole($idrole, $idpermiso, $valor){
 		$rows = $this->_db->query("SELECT * FROM permisos_role WHERE idrole = $idrole AND idpermiso = $idpermiso");
@@ -110,26 +108,80 @@ class aclModel extends Model
 		return $key['permiso'];
 	}
 
-	public function insertarRole($role)
-    {
-        $this->_db->query("INSERT INTO roles VALUES(null, '{$role}')");
+	public function insertarRole($name){
+        $role = new Role();
+        $role->setName($name);
+    	$this->_em->persist($role);
+    	$this->_em->flush();
     }
 
-    public function getPermisos()
-    {
-        $permisos = $this->_db->query("SELECT * FROM permisos");
-        
-        return $permisos->fetchAll(PDO::FETCH_ASSOC);
+    public function getPermissions(){
+        $permissions = $this->_em->getRepository('Permission')->findAll();
+		return $permissions;
+
     }
 
-    public function insertarPermiso($permiso, $llave)
-    {
-        $this->_db->query("INSERT INTO permisos VALUES (null, '{$permiso}', '{$llave}')");
+    public function getPermission($idpermission){
+        $permission = $this->_em->getRepository('Permission')->find($idpermission);
+		return $permission;
+
     }
 
-    public function editarRole($idrole, $nombre){
-    	$this->_db->query("UPDATE roles SET role = '$nombre' WHERE idrole = $idrole");
+    public function insertarPermiso($name, $key){
+        $permission = new Permission();
+        $permission->setName($name);
+        $permission->setPermissionKey($key);
+    	$this->_em->persist($permission);
+    	$this->_em->flush();
     }
+
+    public function editPermission($name, $key, $idpermission){
+        $permission = $this->_em->getRepository('Permission')->find($idpermission);
+        $permission->setName($name);
+        $permission->setPermissionKey($key);
+    	$this->_em->persist($permission);
+    	$this->_em->flush();
+    }
+
+    public function deletePermission($idpermission){
+    	$permission = $this->_em->getRepository('Permission')->find($idpermission);
+    	$this->_em->remove($permission);
+    	$this->_em->flush();
+    }
+
+    public function editarRole($idrole, $name){
+    	$role = $this->_em->getRepository('Role')->find($idrole);
+    	$role->setName($name);
+    	$this->_em->persist($role);
+    	$this->_em->flush();
+    }
+
+    public function eliminarRole($idrole){
+    	$role = $this->_em->getRepository('Role')->find($idrole);
+    	$this->_em->remove($role);
+    	$this->_em->flush();
+    }
+
+    public function roleHavePermission($idrole, $idpermission){
+    	$role = $this->_em->getRepository('Role')->find($idrole);
+    	$havePermission = $role->getPermissions()->contains($this->_em->getRepository('Permission')->find($idpermission));
+    	return $havePermission;
+    }
+
+    public function addPermissionRole($idrole, $idpermission){
+    	$role = $this->_em->getRepository('Role')->find($idrole);
+    	$role->getPermissions()->add($this->_em->getRepository('Permission')->find($idpermission));
+    	$this->_em->persist($role);
+    	$this->_em->flush();
+    }
+
+    public function removePermissionRole($idrole, $idpermission){
+		$role = $this->_em->getRepository('Role')->find($idrole);
+    	$role->getPermissions()->removeElement($this->_em->getRepository('Permission')->find($idpermission));
+    	$this->_em->persist($role);
+    	$this->_em->flush();
+	}
+
 }
 
 ?>

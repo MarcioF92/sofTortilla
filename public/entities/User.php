@@ -29,7 +29,7 @@ class User{
     /** @Column(type="smallint") **/
     private $enabled;
 
-    /** @Column(type="date") **/
+    /** @Column(type="datetime") **/
     private $date;
 
     /** @Column(type="integer") **/

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 30, 2015 at 08:55 PM
+-- Generation Time: Mar 19, 2016 at 03:53 PM
 -- Server version: 5.6.20
 -- PHP Version: 5.5.15
 
@@ -27,10 +27,22 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE IF NOT EXISTS `categories` (
-`idcathegory` int(11) NOT NULL,
-  `title` varchar(20) NOT NULL,
-  `name` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+`idcategory` int(11) NOT NULL,
+  `category` varchar(50) NOT NULL,
+  `parent` int(11) DEFAULT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+
+--
+-- Dumping data for table `categories`
+--
+
+INSERT INTO `categories` (`idcategory`, `category`, `parent`) VALUES
+(1, 'Nombre Category', NULL),
+(2, 'Nombre Category', NULL),
+(3, 'Nombre Category', NULL),
+(4, 'Nombre Category', NULL),
+(5, 'Nombre Category', NULL),
+(6, 'Nombre Category', NULL);
 
 -- --------------------------------------------------------
 
@@ -42,8 +54,9 @@ CREATE TABLE IF NOT EXISTS `comments` (
 `idcomment` int(11) NOT NULL,
   `idauthor` int(11) NOT NULL,
   `idpost` int(11) NOT NULL,
-  `comment` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+  `comment` text NOT NULL,
+  `date_time` datetime NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -53,16 +66,16 @@ CREATE TABLE IF NOT EXISTS `comments` (
 
 CREATE TABLE IF NOT EXISTS `menues` (
 `idmenu` int(11) NOT NULL,
-  `nombre` varchar(30) NOT NULL,
+  `name` varchar(30) NOT NULL,
   `position` varchar(30) NOT NULL,
-  `habilitado` int(1) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+  `enabled` int(1) NOT NULL DEFAULT '0'
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `menues`
 --
 
-INSERT INTO `menues` (`idmenu`, `nombre`, `position`, `habilitado`) VALUES
+INSERT INTO `menues` (`idmenu`, `name`, `position`, `enabled`) VALUES
 (1, 'Principal', 'header', 1),
 (2, 'Sidebar', 'sidebar', 1);
 
@@ -78,15 +91,15 @@ CREATE TABLE IF NOT EXISTS `menu_items` (
   `label` varchar(30) NOT NULL,
   `type` varchar(30) NOT NULL,
   `information` varchar(255) NOT NULL,
-  `idpadre` int(11) NOT NULL,
-  `orden` int(11) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+  `parent` int(11) NOT NULL,
+  `item_order` int(11) NOT NULL
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
 -- Dumping data for table `menu_items`
 --
 
-INSERT INTO `menu_items` (`idmenuitem`, `idmenu`, `label`, `type`, `information`, `idpadre`, `orden`) VALUES
+INSERT INTO `menu_items` (`idmenuitem`, `idmenu`, `label`, `type`, `information`, `parent`, `item_order`) VALUES
 (1, 1, 'Inicio', 'url', '/', 0, 0),
 (2, 1, 'Posts', 'url', '/posts', 0, 0),
 (3, 2, 'Inicio', 'url', '/', 0, 0),
@@ -96,43 +109,43 @@ INSERT INTO `menu_items` (`idmenuitem`, `idmenu`, `label`, `type`, `information`
 -- --------------------------------------------------------
 
 --
--- Table structure for table `modulos`
+-- Table structure for table `modules`
 --
 
-CREATE TABLE IF NOT EXISTS `modulos` (
-`idmodulo` int(11) NOT NULL,
-  `carpeta` varchar(30) NOT NULL,
-  `nombre` varchar(30) NOT NULL,
-  `descripcion` text NOT NULL,
-  `autor` varchar(30) NOT NULL,
+CREATE TABLE IF NOT EXISTS `modules` (
+`idmodule` int(11) NOT NULL,
+  `folder` varchar(30) NOT NULL,
+  `name` varchar(30) NOT NULL,
+  `description` text NOT NULL,
+  `author` varchar(30) NOT NULL,
   `version` varchar(30) NOT NULL,
-  `habilitado` int(11) NOT NULL
+  `enable` int(11) NOT NULL
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
--- Dumping data for table `modulos`
+-- Dumping data for table `modules`
 --
 
-INSERT INTO `modulos` (`idmodulo`, `carpeta`, `nombre`, `descripcion`, `autor`, `version`, `habilitado`) VALUES
+INSERT INTO `modules` (`idmodule`, `folder`, `name`, `description`, `author`, `version`, `enable`) VALUES
 (5, 'cms_config', 'CMS Config', 'Config de los contenidos', 'Marcio Fuentes', '1.0', 1);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `permisos`
+-- Table structure for table `permissions`
 --
 
-CREATE TABLE IF NOT EXISTS `permisos` (
-`idpermiso` int(11) NOT NULL,
-  `permiso` varchar(100) NOT NULL,
-  `llave` varchar(100) NOT NULL
+CREATE TABLE IF NOT EXISTS `permissions` (
+`idpermission` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `permission_key` varchar(100) NOT NULL
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
 
 --
--- Dumping data for table `permisos`
+-- Dumping data for table `permissions`
 --
 
-INSERT INTO `permisos` (`idpermiso`, `permiso`, `llave`) VALUES
+INSERT INTO `permissions` (`idpermission`, `name`, `permission_key`) VALUES
 (1, 'Tareas de administración', 'admin_access'),
 (2, 'Agregar Post', 'nuevo_post'),
 (3, 'Editar Post', 'editar_post'),
@@ -145,56 +158,50 @@ INSERT INTO `permisos` (`idpermiso`, `permiso`, `llave`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `permisos_role`
+-- Table structure for table `permissions_role`
 --
 
-CREATE TABLE IF NOT EXISTS `permisos_role` (
-`idpermisorole` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `permissions_role` (
   `idrole` int(11) NOT NULL,
-  `idpermiso` int(11) NOT NULL,
-  `valor` tinyint(4) NOT NULL
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=20 ;
+  `idpermission` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `permisos_role`
+-- Dumping data for table `permissions_role`
 --
 
-INSERT INTO `permisos_role` (`idpermisorole`, `idrole`, `idpermiso`, `valor`) VALUES
-(1, 1, 1, 1),
-(18, 1, 2, 1),
-(3, 1, 3, 1),
-(4, 1, 4, 1),
-(13, 2, 3, 1),
-(12, 2, 2, 1),
-(7, 2, 4, 0),
-(8, 3, 2, 1),
-(9, 3, 3, 1),
-(14, 1, 5, 1),
-(15, 1, 6, 1),
-(16, 1, 7, 1),
-(17, 1, 9, 1),
-(19, 2, 9, 1);
+INSERT INTO `permissions_role` (`idrole`, `idpermission`) VALUES
+(1, 1),
+(1, 2),
+(1, 3),
+(1, 4),
+(1, 5),
+(1, 6),
+(1, 7),
+(1, 9),
+(2, 2),
+(2, 3),
+(2, 9),
+(3, 2),
+(3, 3);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `permisos_usuario`
+-- Table structure for table `permissions_user`
 --
 
-CREATE TABLE IF NOT EXISTS `permisos_usuario` (
-`idpermisousuario` int(11) NOT NULL,
-  `idusuario` int(11) NOT NULL,
-  `idpermiso` int(11) NOT NULL,
-  `valor` int(11) NOT NULL
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=19 ;
+CREATE TABLE IF NOT EXISTS `permissions_user` (
+  `iduser` int(11) NOT NULL,
+  `idpermission` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `permisos_usuario`
+-- Dumping data for table `permissions_user`
 --
 
-INSERT INTO `permisos_usuario` (`idpermisousuario`, `idusuario`, `idpermiso`, `valor`) VALUES
-(12, 8, 3, 1),
-(16, 8, 2, 0);
+INSERT INTO `permissions_user` (`iduser`, `idpermission`) VALUES
+(15, 4);
 
 -- --------------------------------------------------------
 
@@ -223,8 +230,7 @@ CREATE TABLE IF NOT EXISTS `posts` (
 --
 
 INSERT INTO `posts` (`idpost`, `title`, `img`, `name`, `type`, `parent`, `enable`, `post_order`, `short_url`, `descrp`, `keywords`, `comments`, `author`) VALUES
-(1, 'El primer post de prueba', '', 'el-primer-post-de-prueba', 'page', 0, 1, 0, '/el-primer-post-de-prueba', NULL, NULL, 0, 1),
-(2, 'Post Hijo', '', 'post-hijo', 'page', 1, 1, 0, '/el-primer-post-de-prueba/post-hijo', NULL, NULL, 1, 1);
+(1, 'Titulo', 'asdasd', 'asdasd', 'post', 0, 1, 1, 'asdasd', 'asdasd', 'asdasd', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -233,10 +239,32 @@ INSERT INTO `posts` (`idpost`, `title`, `img`, `name`, `type`, `parent`, `enable
 --
 
 CREATE TABLE IF NOT EXISTS `posts_categories` (
-`idpost_category` int(11) NOT NULL,
   `idpost` int(11) NOT NULL,
   `idcategory` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `posts_revisions`
+--
+
+CREATE TABLE IF NOT EXISTS `posts_revisions` (
+`idversion` int(11) NOT NULL,
+  `idpost` int(11) NOT NULL,
+  `content` text NOT NULL,
+  `date` date NOT NULL,
+  `author` int(11) NOT NULL,
+  `post_show` int(11) NOT NULL
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `posts_revisions`
+--
+
+INSERT INTO `posts_revisions` (`idversion`, `idpost`, `content`, `date`, `author`, `post_show`) VALUES
+(1, 1, '<h1>Contenido</h1>\r\n<p><i>Subtítulo</i></p>\r\n<p>Pseudo Lorem Ipsum</p>', '2015-05-26', 1, 1),
+(2, 2, 'asdadasdadasdasd', '2015-05-26', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -247,30 +275,7 @@ CREATE TABLE IF NOT EXISTS `posts_categories` (
 CREATE TABLE IF NOT EXISTS `posts_tags` (
   `idpost` int(11) NOT NULL,
   `idtag` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `posts_versions`
---
-
-CREATE TABLE IF NOT EXISTS `posts_versions` (
-`idversion` int(11) NOT NULL,
-  `idpost` int(11) NOT NULL,
-  `content` text NOT NULL,
-  `date` date NOT NULL,
-  `author` int(11) NOT NULL,
-  `show` int(11) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
-
---
--- Dumping data for table `posts_versions`
---
-
-INSERT INTO `posts_versions` (`idversion`, `idpost`, `content`, `date`, `author`, `show`) VALUES
-(1, 1, '<h1>Contenido</h1>\r\n<p><i>Subtítulo</i></p>\r\n<p>Pseudo Lorem Ipsum</p>', '2015-05-26', 1, 1),
-(2, 2, 'asdadasdadasdasd', '2015-05-26', 1, 1);
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -280,14 +285,14 @@ INSERT INTO `posts_versions` (`idversion`, `idpost`, `content`, `date`, `author`
 
 CREATE TABLE IF NOT EXISTS `roles` (
 `idrole` int(11) NOT NULL,
-  `role` varchar(100) NOT NULL
+  `name` varchar(100) NOT NULL
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `roles`
 --
 
-INSERT INTO `roles` (`idrole`, `role`) VALUES
+INSERT INTO `roles` (`idrole`, `name`) VALUES
 (1, 'Admin'),
 (2, 'Gestor'),
 (3, 'Editor'),
@@ -304,7 +309,7 @@ CREATE TABLE IF NOT EXISTS `show_menues` (
   `idmenu` int(11) NOT NULL,
   `menu_show` varchar(30) DEFAULT NULL,
   `menu_hide` varchar(30) DEFAULT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `show_menues`
@@ -322,33 +327,32 @@ INSERT INTO `show_menues` (`idshow`, `idmenu`, `menu_show`, `menu_hide`) VALUES
 
 CREATE TABLE IF NOT EXISTS `tags` (
 `idtag` int(11) NOT NULL,
-  `title` int(11) NOT NULL,
-  `name` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+  `tag` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `usuarios`
+-- Table structure for table `users`
 --
 
-CREATE TABLE IF NOT EXISTS `usuarios` (
-`idusuario` int(11) NOT NULL,
-  `nombre` varchar(30) NOT NULL,
-  `usuario` varchar(30) NOT NULL,
-  `pass` varchar(40) NOT NULL,
+CREATE TABLE IF NOT EXISTS `users` (
+`iduser` int(11) NOT NULL,
+  `name` varchar(30) NOT NULL,
+  `user` varchar(30) NOT NULL,
+  `password` varchar(40) NOT NULL,
   `email` varchar(100) NOT NULL,
   `role` int(11) NOT NULL,
-  `estado` tinyint(4) NOT NULL,
-  `fecha` date NOT NULL,
-  `codigo` int(10) unsigned NOT NULL
+  `enabled` tinyint(4) NOT NULL,
+  `date` date NOT NULL,
+  `code` int(10) unsigned NOT NULL
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=16 ;
 
 --
--- Dumping data for table `usuarios`
+-- Dumping data for table `users`
 --
 
-INSERT INTO `usuarios` (`idusuario`, `nombre`, `usuario`, `pass`, `email`, `role`, `estado`, `fecha`, `codigo`) VALUES
+INSERT INTO `users` (`iduser`, `name`, `user`, `password`, `email`, `role`, `enabled`, `date`, `code`) VALUES
 (1, 'nombre1', 'admin', '06d6adadec053f09d59a1584c59347098669a4ba', 'marciofuentes50@hotmail.com', 1, 1, '0000-00-00', 0),
 (15, 'Probando', 'prob1', '06d6adadec053f09d59a1584c59347098669a4ba', 'elmarcio81@hotmail.com', 3, 0, '2015-05-18', 258930435);
 
@@ -360,19 +364,19 @@ INSERT INTO `usuarios` (`idusuario`, `nombre`, `usuario`, `pass`, `email`, `role
 
 CREATE TABLE IF NOT EXISTS `widgets` (
 `idwidget` int(11) NOT NULL,
-  `carpeta` varchar(30) NOT NULL,
-  `nombre` varchar(30) NOT NULL,
-  `descripcion` text NOT NULL,
-  `autor` varchar(30) NOT NULL,
+  `folder` varchar(30) NOT NULL,
+  `name` varchar(30) NOT NULL,
+  `description` text NOT NULL,
+  `author` varchar(30) NOT NULL,
   `version` varchar(30) NOT NULL,
-  `habilitado` int(11) NOT NULL
+  `enabled` int(11) NOT NULL
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=39 ;
 
 --
 -- Dumping data for table `widgets`
 --
 
-INSERT INTO `widgets` (`idwidget`, `carpeta`, `nombre`, `descripcion`, `autor`, `version`, `habilitado`) VALUES
+INSERT INTO `widgets` (`idwidget`, `folder`, `name`, `description`, `author`, `version`, `enabled`) VALUES
 (38, 'menu', 'Menú', 'El Widget Menu', 'Marcio Fuentes', '1.0', 1);
 
 -- --------------------------------------------------------
@@ -386,7 +390,7 @@ CREATE TABLE IF NOT EXISTS `widgets_content` (
   `idwidget` int(11) NOT NULL,
   `stringid` varchar(30) NOT NULL,
   `position` varchar(30) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
 
 --
 -- Dumping data for table `widgets_content`
@@ -404,13 +408,13 @@ INSERT INTO `widgets_content` (`idwidgetcontent`, `idwidget`, `stringid`, `posit
 -- Indexes for table `categories`
 --
 ALTER TABLE `categories`
- ADD PRIMARY KEY (`idcathegory`);
+ ADD PRIMARY KEY (`idcategory`), ADD KEY `parent` (`parent`);
 
 --
 -- Indexes for table `comments`
 --
 ALTER TABLE `comments`
- ADD PRIMARY KEY (`idcomment`);
+ ADD PRIMARY KEY (`idcomment`), ADD KEY `idpost` (`idpost`);
 
 --
 -- Indexes for table `menues`
@@ -422,79 +426,79 @@ ALTER TABLE `menues`
 -- Indexes for table `menu_items`
 --
 ALTER TABLE `menu_items`
- ADD PRIMARY KEY (`idmenuitem`);
+ ADD PRIMARY KEY (`idmenuitem`), ADD KEY `idmenu` (`idmenu`), ADD KEY `parent` (`parent`);
 
 --
--- Indexes for table `modulos`
+-- Indexes for table `modules`
 --
-ALTER TABLE `modulos`
- ADD PRIMARY KEY (`idmodulo`), ADD UNIQUE KEY `nombre` (`nombre`), ADD UNIQUE KEY `carpeta` (`carpeta`);
+ALTER TABLE `modules`
+ ADD PRIMARY KEY (`idmodule`), ADD UNIQUE KEY `nombre` (`name`), ADD UNIQUE KEY `carpeta` (`folder`);
 
 --
--- Indexes for table `permisos`
+-- Indexes for table `permissions`
 --
-ALTER TABLE `permisos`
- ADD PRIMARY KEY (`idpermiso`);
+ALTER TABLE `permissions`
+ ADD PRIMARY KEY (`idpermission`);
 
 --
--- Indexes for table `permisos_role`
+-- Indexes for table `permissions_role`
 --
-ALTER TABLE `permisos_role`
- ADD PRIMARY KEY (`idpermisorole`);
+ALTER TABLE `permissions_role`
+ ADD PRIMARY KEY (`idrole`,`idpermission`), ADD KEY `idpermission` (`idpermission`);
 
 --
--- Indexes for table `permisos_usuario`
+-- Indexes for table `permissions_user`
 --
-ALTER TABLE `permisos_usuario`
- ADD PRIMARY KEY (`idpermisousuario`);
+ALTER TABLE `permissions_user`
+ ADD PRIMARY KEY (`iduser`,`idpermission`), ADD KEY `idpermission` (`idpermission`);
 
 --
 -- Indexes for table `posts`
 --
 ALTER TABLE `posts`
- ADD PRIMARY KEY (`idpost`), ADD UNIQUE KEY `name` (`name`,`short_url`);
+ ADD PRIMARY KEY (`idpost`), ADD UNIQUE KEY `name` (`name`,`short_url`), ADD KEY `idpost` (`idpost`), ADD KEY `parent` (`parent`), ADD KEY `author` (`author`);
 
 --
 -- Indexes for table `posts_categories`
 --
 ALTER TABLE `posts_categories`
- ADD PRIMARY KEY (`idpost_category`);
+ ADD PRIMARY KEY (`idpost`,`idcategory`), ADD KEY `idcategory` (`idcategory`);
+
+--
+-- Indexes for table `posts_revisions`
+--
+ALTER TABLE `posts_revisions`
+ ADD PRIMARY KEY (`idversion`), ADD KEY `idpost` (`idpost`), ADD KEY `author` (`author`);
 
 --
 -- Indexes for table `posts_tags`
 --
 ALTER TABLE `posts_tags`
- ADD UNIQUE KEY `post_tag` (`idpost`,`idtag`);
-
---
--- Indexes for table `posts_versions`
---
-ALTER TABLE `posts_versions`
- ADD PRIMARY KEY (`idversion`);
+ ADD PRIMARY KEY (`idpost`,`idtag`), ADD UNIQUE KEY `post_tag` (`idpost`,`idtag`), ADD KEY `idtag` (`idtag`);
 
 --
 -- Indexes for table `roles`
 --
 ALTER TABLE `roles`
- ADD PRIMARY KEY (`idrole`), ADD UNIQUE KEY `role` (`role`);
+ ADD PRIMARY KEY (`idrole`), ADD UNIQUE KEY `role` (`name`);
 
 --
 -- Indexes for table `show_menues`
 --
 ALTER TABLE `show_menues`
- ADD PRIMARY KEY (`idshow`);
+ ADD PRIMARY KEY (`idshow`), ADD KEY `idmenu` (`idmenu`);
 
 --
 -- Indexes for table `tags`
 --
 ALTER TABLE `tags`
- ADD PRIMARY KEY (`idtag`), ADD UNIQUE KEY `title` (`title`,`name`);
+ ADD PRIMARY KEY (`idtag`), ADD UNIQUE KEY `title` (`tag`);
 
 --
--- Indexes for table `usuarios`
+-- Indexes for table `users`
 --
-ALTER TABLE `usuarios`
- ADD PRIMARY KEY (`idusuario`), ADD UNIQUE KEY `codigo` (`codigo`);
+ALTER TABLE `users`
+ ADD PRIMARY KEY (`iduser`), ADD UNIQUE KEY `codigo` (`code`), ADD KEY `role` (`role`);
 
 --
 -- Indexes for table `widgets`
@@ -506,7 +510,7 @@ ALTER TABLE `widgets`
 -- Indexes for table `widgets_content`
 --
 ALTER TABLE `widgets_content`
- ADD PRIMARY KEY (`idwidgetcontent`);
+ ADD PRIMARY KEY (`idwidgetcontent`), ADD KEY `idwidget` (`idwidget`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -516,7 +520,7 @@ ALTER TABLE `widgets_content`
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-MODIFY `idcathegory` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `idcategory` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `comments`
 --
@@ -533,39 +537,24 @@ MODIFY `idmenu` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 ALTER TABLE `menu_items`
 MODIFY `idmenuitem` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 --
--- AUTO_INCREMENT for table `modulos`
+-- AUTO_INCREMENT for table `modules`
 --
-ALTER TABLE `modulos`
-MODIFY `idmodulo` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+ALTER TABLE `modules`
+MODIFY `idmodule` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 --
--- AUTO_INCREMENT for table `permisos`
+-- AUTO_INCREMENT for table `permissions`
 --
-ALTER TABLE `permisos`
-MODIFY `idpermiso` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
---
--- AUTO_INCREMENT for table `permisos_role`
---
-ALTER TABLE `permisos_role`
-MODIFY `idpermisorole` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=20;
---
--- AUTO_INCREMENT for table `permisos_usuario`
---
-ALTER TABLE `permisos_usuario`
-MODIFY `idpermisousuario` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=19;
+ALTER TABLE `permissions`
+MODIFY `idpermission` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
 MODIFY `idpost` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
--- AUTO_INCREMENT for table `posts_categories`
+-- AUTO_INCREMENT for table `posts_revisions`
 --
-ALTER TABLE `posts_categories`
-MODIFY `idpost_category` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `posts_versions`
---
-ALTER TABLE `posts_versions`
+ALTER TABLE `posts_revisions`
 MODIFY `idversion` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `roles`
@@ -583,10 +572,10 @@ MODIFY `idshow` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 ALTER TABLE `tags`
 MODIFY `idtag` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT for table `usuarios`
+-- AUTO_INCREMENT for table `users`
 --
-ALTER TABLE `usuarios`
-MODIFY `idusuario` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;
+ALTER TABLE `users`
+MODIFY `iduser` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT for table `widgets`
 --
@@ -597,6 +586,16 @@ MODIFY `idwidget` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=39;
 --
 ALTER TABLE `widgets_content`
 MODIFY `idwidgetcontent` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `categories`
+--
+ALTER TABLE `categories`
+ADD CONSTRAINT `categories_ibfk_1` FOREIGN KEY (`parent`) REFERENCES `categories` (`idcategory`) ON DELETE CASCADE ON UPDATE CASCADE;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

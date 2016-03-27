@@ -1,35 +1,31 @@
-<h2>Permisos de Usuario</h2>
-
-<h3>Usuario: {$info.usuario}<br />Role:{$info.role}</h3>
+<h3>Usuario: {$user->getUser()}<br />Role:{$user->getRole()->getName()}</h3>
 
 <form name="form1" method="post" action="">
     <input type="hidden" value="1" name="guardar">
-    {if isset($permisos) && count($permisos)}
+    {if isset($permissions) && count($permissions)}
     <table>
         <tr>
             <td>Permiso</td>
             <td></td>
         </tr>
-        {foreach from=$permisos item=pr}
-            {if $role.$pr.valor == 1}
-                {assign var="v" value="habilitado"}
-            {else}
-                {assign var="v" value="denegado"}
-            {/if}
+        {foreach from=$permissions item=permission}
         <tr>
-            <td>{$usuario.$pr.permiso}</td>
-            
+            <td>{$permission->getName()}</td>
             <td>
-                <select name="perm_{$usuario.$pr.idpermiso}">
-                    <option value="x"{if $usuario.$pr.heredado} selected="selected"{/if}>Por defecto({$v})</option>
-                    <option value="1"{if ($usuario.$pr.valor == 1 && $usuario.$pr.heredado == "")} selected="selected"{/if}>Habilitado</option>
-                    <option value=""{if ($usuario.$pr.valor == 0 && $usuario.$pr.heredado == "")} selected="selected"{/if}>Denegado</option>
-                </select>
+                {if $user->getRole()->getPermissions()->contains($permission)}
+                    Habilitado por Role
+                    <input type="hidden" name="perm_{$permission->getIdpermission()}" value="-1" />
+                {else}
+                    <select name="perm_{$permission->getIdpermission()}">
+                        <option value="1" {if $user->getPermissions()->contains($permission)}selected="selected"{/if}>Habilitado</option>
+                        <option value="0" {if !$user->getPermissions()->contains($permission)}selected="selected"{/if}>Denegado</option>
+                    </select>
+                {/if}
             </td>
         </tr>
             
         {/foreach}
     </table>
-        <p><input type="submit" value="guardar" /></p>
+        <p><input type="submit" value="Guardar" /></p>
 {/if}
 </form>

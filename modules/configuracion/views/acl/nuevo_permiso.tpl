@@ -1,14 +1,12 @@
-<h2>Agregar Permiso</h2>
-
 <form name="form1" action="" method="post">
     <input type="hidden" name="guardar" value="1" />
     
     <p>
-        Permiso: <input type="text" name="permiso" value="{$datos.permiso|default:""}" />
+        Permiso: <input type="text" name="permiso" value="{if isset($datos)}{$datos->getName()}{/if}" />
     </p>
     
     <p>
-        Llave: <input type="text" name="llave" value="{$datos.llave|default:""}" />
+        Llave: <input type="text" name="llave" value="{if isset($datos)}{$datos->getPermissionkey()}{/if}" />
     </p>
     
     <p>

@@ -1,33 +1,36 @@
 <h2>Gestión de permisos de role</h2>
 
-<h3>Role: {$roles.role}</h3>
+{if isset($role)}
+    <h3>Role: {$role->getName()}</h3>
 
-<p>Permisos: </p>
+    <p>Permisos: </p>
 
-<form name="form1" method="post" action="">
-    <input type="hidden" value="1" name="guardar" />
-    
-    {if isset($permisos) && count($permisos)}
-    <table>
-        <tr>
-            <th>Permiso</th>
-            <th>Habilitado</th>
-            <th>Denegado</th>
-            <th>Ignorar</th>
-        </tr>
-
-        {foreach item=pr from=$permisos}
-
+    <form name="form1" method="post" action="">
+        <input type="hidden" value="1" name="guardar" />
+        
+        {if isset($permissions)}
+        <table>
             <tr>
-                <td>{$pr.nombre}</td>
-                <td><input type="radio" name="perm_{$pr.idpermiso}" value="1" {if ($pr.valor == 1)}checked="checked" {/if}/></td>
-                <td><input type="radio" name="perm_{$pr.idpermiso}" value="0" {if $pr.valor == ""}checked="checked" {/if}></td>
-                <td><input type="radio" name="perm_{$pr.idpermiso}" value="x" {if $pr.valor === "x"}checked="checked" {/if}></td>
+                <th>Permiso</th>
+                <th>Habilitado</th>
             </tr>
 
-        {/foreach}
-    </table>
-    {/if}
+            {foreach item=permission from=$permissions}
+                <tr>
+                    <td>{$permission->getName()}</td>
+                    
+                    <td>
+                        <input type="checkbox" name="permission_{$permission->getIdpermission()}" value="1" {if $permissionsRole->contains($permission)}checked{/if} />
+                    </td>
+                    
+                </tr>
 
-    <p><input type="submit" value="Guardar" /></p>
-</form>
+            {/foreach}
+        </table>
+        {/if}
+
+        <p><input type="submit" value="Guardar" /></p>
+    </form>
+{else}
+    No existe Role
+{/if}
