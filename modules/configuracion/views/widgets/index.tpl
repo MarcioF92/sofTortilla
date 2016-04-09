@@ -1,30 +1,18 @@
-{if isset($wids) && count($wids)}
-
-
 <table>
+{foreach from=$widgetList item=widget}
 
-{foreach key=key item=w from=$wids}
 	<tr>
-		<td><p><strong>{$w.nombre}</strong></p>
-			{if $w.habilitado == 1}
-				<a href="{$_layoutParams.root}configuracion/widgets/deshabilitar/{$w.idwidget}">Deshabilitar</a>
+		<td><p><strong>{$widget.information.name}</strong></p>
+			{if $widget.activated}
+				<a href="{$_layoutParams.root}configuracion/widgets/disactivate/{$widget.directory}/">Deshabilitar</a>
 			{else}
-				<a href="{$_layoutParams.root}configuracion/widgets/habilitar/{$w.idwidget}">Habilitar</a>
+				<a href="{$_layoutParams.root}configuracion/widgets/activate/{$widget.directory}">Habilitar</a>
 			{/if}
 		</td>
-		<td><p>{$w.descripcion}</p>
-			<small>Versión: {$w.version} | Autor: {$w.autor}</small>
+		<td><p>{$widget.information.description}</p>
+			<small>Versión: {$widget.information.version} | Autor: {$widget.information.author}</small>
 		</td>
 	</tr>
 {/foreach}
 
 </table>
-
-{else}
-
-	<p>No hay Widgets</p>
-
-{/if}
-
-
-{$paginacion|default:""}

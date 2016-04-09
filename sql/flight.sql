@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 19, 2016 at 03:53 PM
+-- Generation Time: Apr 09, 2016 at 05:13 PM
 -- Server version: 5.6.20
 -- PHP Version: 5.5.15
 
@@ -76,8 +76,7 @@ CREATE TABLE IF NOT EXISTS `menues` (
 --
 
 INSERT INTO `menues` (`idmenu`, `name`, `position`, `enabled`) VALUES
-(1, 'Principal', 'header', 1),
-(2, 'Sidebar', 'sidebar', 1);
+(1, 'Principal', 'header', 1);
 
 -- --------------------------------------------------------
 
@@ -89,9 +88,8 @@ CREATE TABLE IF NOT EXISTS `menu_items` (
 `idmenuitem` int(11) NOT NULL,
   `idmenu` int(11) NOT NULL,
   `label` varchar(30) NOT NULL,
-  `type` varchar(30) NOT NULL,
-  `information` varchar(255) NOT NULL,
-  `parent` int(11) NOT NULL,
+  `url` varchar(255) NOT NULL,
+  `parent` int(11) DEFAULT NULL,
   `item_order` int(11) NOT NULL
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
@@ -99,35 +97,10 @@ CREATE TABLE IF NOT EXISTS `menu_items` (
 -- Dumping data for table `menu_items`
 --
 
-INSERT INTO `menu_items` (`idmenuitem`, `idmenu`, `label`, `type`, `information`, `parent`, `item_order`) VALUES
-(1, 1, 'Inicio', 'url', '/', 0, 0),
-(2, 1, 'Posts', 'url', '/posts', 0, 0),
-(3, 2, 'Inicio', 'url', '/', 0, 0),
-(4, 2, 'Inicio', 'url', '/', 0, 0),
-(5, 1, 'Sub Post', 'url', '/', 2, 0);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `modules`
---
-
-CREATE TABLE IF NOT EXISTS `modules` (
-`idmodule` int(11) NOT NULL,
-  `folder` varchar(30) NOT NULL,
-  `name` varchar(30) NOT NULL,
-  `description` text NOT NULL,
-  `author` varchar(30) NOT NULL,
-  `version` varchar(30) NOT NULL,
-  `enable` int(11) NOT NULL
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
-
---
--- Dumping data for table `modules`
---
-
-INSERT INTO `modules` (`idmodule`, `folder`, `name`, `description`, `author`, `version`, `enable`) VALUES
-(5, 'cms_config', 'CMS Config', 'Config de los contenidos', 'Marcio Fuentes', '1.0', 1);
+INSERT INTO `menu_items` (`idmenuitem`, `idmenu`, `label`, `url`, `parent`, `item_order`) VALUES
+(1, 1, 'Inicio', '/', NULL, 0),
+(2, 1, 'Posts', '/posts', NULL, 0),
+(5, 1, 'Sub Post', '/', 2, 0);
 
 -- --------------------------------------------------------
 
@@ -139,21 +112,20 @@ CREATE TABLE IF NOT EXISTS `permissions` (
 `idpermission` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
   `permission_key` varchar(100) NOT NULL
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
 
 --
 -- Dumping data for table `permissions`
 --
 
 INSERT INTO `permissions` (`idpermission`, `name`, `permission_key`) VALUES
-(1, 'Tareas de administración', 'admin_access'),
+(1, 'Tareas de administraciÃ³n', 'admin_access'),
 (2, 'Agregar Post', 'nuevo_post'),
 (3, 'Editar Post', 'editar_post'),
 (4, 'Eliminar Post', 'eliminar_post'),
-(5, 'Módulos', 'modulos'),
+(5, 'MÃ³dulos', 'modulos'),
 (6, 'Widgets', 'widgets'),
-(7, 'Usuarios', 'usuarios'),
-(9, 'Hacer Pete', 'hacer_pete');
+(7, 'Usuarios', 'usuarios');
 
 -- --------------------------------------------------------
 
@@ -286,7 +258,7 @@ CREATE TABLE IF NOT EXISTS `posts_tags` (
 CREATE TABLE IF NOT EXISTS `roles` (
 `idrole` int(11) NOT NULL,
   `name` varchar(100) NOT NULL
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
 
 --
 -- Dumping data for table `roles`
@@ -295,8 +267,7 @@ CREATE TABLE IF NOT EXISTS `roles` (
 INSERT INTO `roles` (`idrole`, `name`) VALUES
 (1, 'Admin'),
 (2, 'Gestor'),
-(3, 'Editor'),
-(4, 'nuevoRole');
+(3, 'Editor');
 
 -- --------------------------------------------------------
 
@@ -344,17 +315,17 @@ CREATE TABLE IF NOT EXISTS `users` (
   `email` varchar(100) NOT NULL,
   `role` int(11) NOT NULL,
   `enabled` tinyint(4) NOT NULL,
-  `date` date NOT NULL,
+  `date` datetime NOT NULL,
   `code` int(10) unsigned NOT NULL
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=16 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=21 ;
 
 --
 -- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`iduser`, `name`, `user`, `password`, `email`, `role`, `enabled`, `date`, `code`) VALUES
-(1, 'nombre1', 'admin', '06d6adadec053f09d59a1584c59347098669a4ba', 'marciofuentes50@hotmail.com', 1, 1, '0000-00-00', 0),
-(15, 'Probando', 'prob1', '06d6adadec053f09d59a1584c59347098669a4ba', 'elmarcio81@hotmail.com', 3, 0, '2015-05-18', 258930435);
+(1, 'nombre1', 'admin', '06d6adadec053f09d59a1584c59347098669a4ba', 'marciofuentes50@hotmail.com', 1, 1, '0000-00-00 00:00:00', 0),
+(15, 'Probando', 'prob1', '06d6adadec053f09d59a1584c59347098669a4ba', 'marciofuentes50@gmail.com', 3, 0, '2015-05-18 14:12:33', 258930435);
 
 -- --------------------------------------------------------
 
@@ -364,20 +335,15 @@ INSERT INTO `users` (`iduser`, `name`, `user`, `password`, `email`, `role`, `ena
 
 CREATE TABLE IF NOT EXISTS `widgets` (
 `idwidget` int(11) NOT NULL,
-  `folder` varchar(30) NOT NULL,
-  `name` varchar(30) NOT NULL,
-  `description` text NOT NULL,
-  `author` varchar(30) NOT NULL,
-  `version` varchar(30) NOT NULL,
-  `enabled` int(11) NOT NULL
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=39 ;
+  `directory` varchar(30) NOT NULL
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=42 ;
 
 --
 -- Dumping data for table `widgets`
 --
 
-INSERT INTO `widgets` (`idwidget`, `folder`, `name`, `description`, `author`, `version`, `enabled`) VALUES
-(38, 'menu', 'Menú', 'El Widget Menu', 'Marcio Fuentes', '1.0', 1);
+INSERT INTO `widgets` (`idwidget`, `directory`) VALUES
+(41, 'menu');
 
 -- --------------------------------------------------------
 
@@ -427,12 +393,6 @@ ALTER TABLE `menues`
 --
 ALTER TABLE `menu_items`
  ADD PRIMARY KEY (`idmenuitem`), ADD KEY `idmenu` (`idmenu`), ADD KEY `parent` (`parent`);
-
---
--- Indexes for table `modules`
---
-ALTER TABLE `modules`
- ADD PRIMARY KEY (`idmodule`), ADD UNIQUE KEY `nombre` (`name`), ADD UNIQUE KEY `carpeta` (`folder`);
 
 --
 -- Indexes for table `permissions`
@@ -537,15 +497,10 @@ MODIFY `idmenu` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 ALTER TABLE `menu_items`
 MODIFY `idmenuitem` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 --
--- AUTO_INCREMENT for table `modules`
---
-ALTER TABLE `modules`
-MODIFY `idmodule` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
---
 -- AUTO_INCREMENT for table `permissions`
 --
 ALTER TABLE `permissions`
-MODIFY `idpermission` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
+MODIFY `idpermission` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT for table `posts`
 --
@@ -560,7 +515,7 @@ MODIFY `idversion` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 -- AUTO_INCREMENT for table `roles`
 --
 ALTER TABLE `roles`
-MODIFY `idrole` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+MODIFY `idrole` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `show_menues`
 --
@@ -575,12 +530,12 @@ MODIFY `idtag` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-MODIFY `iduser` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;
+MODIFY `iduser` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=21;
 --
 -- AUTO_INCREMENT for table `widgets`
 --
 ALTER TABLE `widgets`
-MODIFY `idwidget` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=39;
+MODIFY `idwidget` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=42;
 --
 -- AUTO_INCREMENT for table `widgets_content`
 --

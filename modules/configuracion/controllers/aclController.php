@@ -36,14 +36,17 @@ class aclController extends Controller
                 exit;
             }
             
-            $this->_aclm->insertarRole($this->getSql('role'));
+            $this->_aclm->addRole($this->getSql('role'));
             $this->redirect('configuracion/acl/roles');
         }
         
         $this->_view->render('nuevo_role', 'acl');
     }
 
-    public function editar_role($idrole){
+    public function editar_role($idrole = false){
+        if (!$idrole) {
+            $this->redirect('configuracion/acl/roles');
+        }
     	$this->_view->assign('titulo', 'Editar Role');
     	$this->_view->assign('role', $this->_aclm->getRole($idrole));
         
@@ -58,19 +61,22 @@ class aclController extends Controller
 
             $nombre = $this->getPostParam('name');
             
-            $this->_aclm->editarRole($idrole, $nombre);
+            $this->_aclm->editRole($idrole, $nombre);
             $this->redirect('configuracion/acl/roles');
         }
         
         $this->_view->render('editar_role', 'acl');
     }
 
-    public function eliminar_role($idrole){
+    public function eliminar_role($idrole = false){
+        if (!$idrole) {
+            $this->redirect('configuracion/acl/roles');
+        }
         $this->_view->assign('titulo', 'Eliminar Role');
         $this->_view->assign('role', $this->_aclm->getRole($idrole));
 
         if($this->getInt('aceptar') == 1){
-            $this->_aclm->eliminarRole($idrole);
+            $this->_aclm->deleteRole($idrole);
             $this->redirect('configuracion/acl/roles');
         }
 
@@ -88,7 +94,10 @@ class aclController extends Controller
     *
     */
 
-    public function permisos_role($idrole){
+    public function permisos_role($idrole = false){
+        if (!$idrole) {
+            $this->redirect('configuracion/acl/roles');
+        }
         $this->_view->assign('titulo', 'Administración de permisos Role');
 
         $this->_view->assign('role', $this->_aclm->getRole($idrole));
@@ -141,7 +150,7 @@ class aclController extends Controller
                 exit;
             }
             
-            $this->_aclm->insertarPermiso(
+            $this->_aclm->addPermission(
                     $this->getSql('permiso'), 
                     $this->getAlphaNum('llave')
                     );
@@ -152,7 +161,10 @@ class aclController extends Controller
         $this->_view->render('nuevo_permiso', 'acl');
     }
 
-    public function eliminar_permiso($idpermission){
+    public function eliminar_permiso($idpermission = false){
+        if (!$idpermission) {
+            $this->redirect('configuracion/acl/permisos');
+        }
         $this->_view->assign('titulo', 'Eliminar permiso');
         $this->_view->assign('permission', $this->_aclm->getPermission($idpermission));
 
@@ -168,7 +180,10 @@ class aclController extends Controller
         $this->_view->render('eliminar_permiso', 'acl');
     }
 
-    public function editar_permiso($idpermission){
+    public function editar_permiso($idpermission = false){
+        if (!$idpermission) {
+            $this->redirect('configuracion/acl/permisos');
+        }
         $this->_view->assign('titulo', 'Editar permiso');
         $this->_view->assign('datos', $this->_aclm->getPermission($idpermission));
 

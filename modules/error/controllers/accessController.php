@@ -29,7 +29,7 @@ class accessController extends Controller{
         $error['8080'] = 'Tiempo de la sesión agotado';
 
         if (array_key_exists($codigo, $error)) {
-           return $error[$codigo];
+            return $error[$codigo];
         } else {
             return $error['default'];
         }

@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.8, created on 2016-01-13 23:36:28
+<?php /* Smarty version Smarty-3.1.8, created on 2016-03-30 19:49:21
          compiled from "D:\Marcio\Programas\xampp_1_8\htdocs\Frameworks\flight_editado\views\themes\default_theme\header.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:235005687e2d94fce14-96180481%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '5be6a478fed955816ef640056d27a6f73d8f1e2e' => 
     array (
       0 => 'D:\\Marcio\\Programas\\xampp_1_8\\htdocs\\Frameworks\\flight_editado\\views\\themes\\default_theme\\header.tpl',
-      1 => 1452724586,
+      1 => 1459215658,
       2 => 'file',
     ),
   ),
@@ -24,7 +24,6 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'js' => 0,
     'widgets' => 0,
     'tp' => 0,
-    'menues' => 0,
     '_error' => 0,
     '_mensaje' => 0,
     'title' => 0,
@@ -77,22 +76,17 @@ $_smarty_tpl->tpl_vars['js']->_loop = true;
               <section class="top-bar-section">
                 <ul class="left">
                 <?php if (isset($_smarty_tpl->tpl_vars['widgets']->value['top'])){?>
-                    <!--<?php  $_smarty_tpl->tpl_vars['tp'] = new Smarty_Variable; $_smarty_tpl->tpl_vars['tp']->_loop = false;
+                    <?php  $_smarty_tpl->tpl_vars['tp'] = new Smarty_Variable; $_smarty_tpl->tpl_vars['tp']->_loop = false;
  $_from = $_smarty_tpl->tpl_vars['widgets']->value['top']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array');}
 foreach ($_from as $_smarty_tpl->tpl_vars['tp']->key => $_smarty_tpl->tpl_vars['tp']->value){
 $_smarty_tpl->tpl_vars['tp']->_loop = true;
 ?>
                         <?php echo $_smarty_tpl->tpl_vars['tp']->value;?>
 
-                    <?php } ?> -->
-                    <?php  $_smarty_tpl->tpl_vars['tp'] = new Smarty_Variable; $_smarty_tpl->tpl_vars['tp']->_loop = false;
- $_from = $_smarty_tpl->tpl_vars['menues']->value['header']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array');}
-foreach ($_from as $_smarty_tpl->tpl_vars['tp']->key => $_smarty_tpl->tpl_vars['tp']->value){
-$_smarty_tpl->tpl_vars['tp']->_loop = true;
-?>
-                        <?php echo $_smarty_tpl->tpl_vars['tp']->value;?>
-
                     <?php } ?>
+                    <!-- 
+                        
+                     -->
                 <?php }?>
                 </ul>
               </section>

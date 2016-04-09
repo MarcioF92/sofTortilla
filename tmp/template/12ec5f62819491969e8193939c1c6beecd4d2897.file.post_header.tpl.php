@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.8, created on 2016-01-02 16:05:08
+<?php /* Smarty version Smarty-3.1.8, created on 2016-03-29 23:35:39
          compiled from "D:\Marcio\Programas\xampp_1_8\htdocs\Frameworks\flight_editado\views\themes\default_theme\post_header.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:148385687e724f1f567-38509112%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '12ec5f62819491969e8193939c1c6beecd4d2897' => 
     array (
       0 => 'D:\\Marcio\\Programas\\xampp_1_8\\htdocs\\Frameworks\\flight_editado\\views\\themes\\default_theme\\post_header.tpl',
-      1 => 1451674167,
+      1 => 1459305336,
       2 => 'file',
     ),
   ),
@@ -15,18 +15,18 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   'function' => 
   array (
   ),
+  'version' => 'Smarty-3.1.8',
+  'unifunc' => 'content_5687e7250904f9_15662413',
   'variables' => 
   array (
     'post' => 0,
     '_layoutParams' => 0,
     'js' => 0,
     'widgets' => 0,
-    'tp' => 0,
     'menues' => 0,
+    'tp' => 0,
   ),
   'has_nocache_code' => false,
-  'version' => 'Smarty-3.1.8',
-  'unifunc' => 'content_5687e7250904f9_15662413',
 ),false); /*/%%SmartyHeaderCode%%*/?>
 <?php if ($_valid && !is_callable('content_5687e7250904f9_15662413')) {function content_5687e7250904f9_15662413($_smarty_tpl) {?><!DOCTYPE html>
 <!--[if IE 9]><html class="lt-ie10" lang="en" > <![endif]-->
@@ -80,14 +80,6 @@ $_smarty_tpl->tpl_vars['js']->_loop = true;
               <section class="top-bar-section">
                 <ul class="left">
                 <?php if (isset($_smarty_tpl->tpl_vars['widgets']->value['top'])){?>
-                    <!--<?php  $_smarty_tpl->tpl_vars['tp'] = new Smarty_Variable; $_smarty_tpl->tpl_vars['tp']->_loop = false;
- $_from = $_smarty_tpl->tpl_vars['widgets']->value['top']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array');}
-foreach ($_from as $_smarty_tpl->tpl_vars['tp']->key => $_smarty_tpl->tpl_vars['tp']->value){
-$_smarty_tpl->tpl_vars['tp']->_loop = true;
-?>
-                        <?php echo $_smarty_tpl->tpl_vars['tp']->value;?>
-
-                    <?php } ?> -->
                     <?php  $_smarty_tpl->tpl_vars['tp'] = new Smarty_Variable; $_smarty_tpl->tpl_vars['tp']->_loop = false;
  $_from = $_smarty_tpl->tpl_vars['menues']->value['header']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array');}
 foreach ($_from as $_smarty_tpl->tpl_vars['tp']->key => $_smarty_tpl->tpl_vars['tp']->value){
@@ -96,6 +88,14 @@ $_smarty_tpl->tpl_vars['tp']->_loop = true;
                         <?php echo $_smarty_tpl->tpl_vars['tp']->value;?>
 
                     <?php } ?>
+                    <?php  $_smarty_tpl->tpl_vars['tp'] = new Smarty_Variable; $_smarty_tpl->tpl_vars['tp']->_loop = false;
+ $_from = $_smarty_tpl->tpl_vars['widgets']->value['top']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array');}
+foreach ($_from as $_smarty_tpl->tpl_vars['tp']->key => $_smarty_tpl->tpl_vars['tp']->value){
+$_smarty_tpl->tpl_vars['tp']->_loop = true;
+?>
+                        <?php echo $_smarty_tpl->tpl_vars['tp']->value;?>
+
+                    <?php } ?> 
                 <?php }?>
                 </ul>
               </section>

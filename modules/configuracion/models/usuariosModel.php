@@ -17,6 +17,34 @@ class usuariosModel extends Model
 		return $user;
 	}
 
+	public function getUserByEmail($email){
+		$user = $this->_em->getRepository('User')->findOneBy(array('email' => $email));
+		return $user;
+	}
+
+	public function getUserByUsername($username){
+		$user = $this->_em->getRepository('User')->findOneBy(array('user' => $username));
+		return $user;
+	}
+
+	public function existEmailUserWithDifferentId($email, $iduser = false){
+		$user = $this->getUserByEmail($email);
+		if($user && $user->getIduser() != $iduser){
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public function existUsernameWithDifferentId($username, $iduser = false){
+		$user = $this->getUserByUsername($username);
+		if($user && $user->getIduser() != $iduser){
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	public function getRoles(){
 		$role = $this->_em->getRepository('Role')->findAll();
 		return $role;
@@ -36,6 +64,22 @@ class usuariosModel extends Model
 		$this->_em->flush();
 	}
 
+	public function deleteUser($iduser){
+		$user = $this->_em->getRepository('User')->find($iduser);
+		$this->_em->remove($user);
+		$this->_em->flush();
+	}
+
+	public function editUser($name, $username, $email, $role, $iduser){
+		$user = $this->_em->getRepository('User')->find($iduser);
+		$user->setName($name);
+		$user->setUser($username);
+		$user->setEmail($email);
+		$user->setRole($this->_em->getRepository('Role')->find($role));
+		$this->_em->persist($user);
+		$this->_em->flush();
+	}
+
 	public function getPermissions(){
 		$permissions = $this->_em->getRepository('Permission')->findAll();
 		return $permissions;
@@ -44,21 +88,29 @@ class usuariosModel extends Model
 	public function updatePermissions($enabled, $disabled, $iduser){
 		$user = $this->_em->getRepository('User')->find($iduser);
 		foreach ($enabled as $permission) {
-			if (!$this->havePermission($permission, $user)) {
-				$user->getPermissions()->add($permission);
+			if (!$this->havePermission($user, $permission)) {
+				$this->addPermission($user, $permission);
 			}
 		}
 		foreach ($disabled as $permission) {
-			if ($this->havePermission($permission, $user)) {
-				$user->getPermissions()->removeElement($permission);
+			if ($this->havePermission($user, $permission)) {
+				$this->removeElement($user, $permission);
 			}
 		}
+		$this->_em->persist($user);
+		$this->_em->flush();
 	}
 
-	public function havePermission($permission, $user){
-		echo "Existe?: " . $permission->getName() . "<br>";
-		print_r($user->getPermissions());
+	public function havePermission($user, $permission){		
 		return $user->getPermissions()->contains($permission);
+	}
+
+	public function addPermission($user, $permission){
+		$user->getPermissions()->add($permission);
+	}
+
+	public function removePermission($user, $permission){
+		$user->getPermissions()->removeElement($permission);
 	}
 
 	public function getUsuario($idusuario){

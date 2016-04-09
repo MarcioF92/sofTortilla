@@ -39,6 +39,7 @@ abstract class Widget
 	}
 
     public function enabled($widget){
+    	/*echo "Widget: " . $widget;
     	$this->_registry = Registry::getInstance();
         $this->_db = $this->_registry->_db;
         $rowObj = $this->_db->query("SELECT * FROM widgets WHERE folder = '$widget' AND enabled = 1");
@@ -47,7 +48,8 @@ abstract class Widget
         	return 1;
         } else {
         	return 0;
-        }
+        }*/
+        return 1;
     }
 
     protected function getContent(){}

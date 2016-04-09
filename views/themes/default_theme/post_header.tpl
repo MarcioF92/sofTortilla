@@ -36,12 +36,12 @@
               <section class="top-bar-section">
                 <ul class="left">
                 {if isset($widgets.top)}
-                    <!--{foreach from=$widgets.top item=tp}
-                        {$tp}
-                    {/foreach} -->
                     {foreach from=$menues.header item=tp}
                         {$tp}
                     {/foreach}
+                    {foreach from=$widgets.top item=tp}
+                        {$tp}
+                    {/foreach} 
                 {/if}
                 </ul>
               </section>

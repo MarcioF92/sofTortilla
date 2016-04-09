@@ -7,48 +7,38 @@ class widgetsModel extends Model
 		parent::__construct();
 	}
 
-	public function getWidgets()
+	public function getWidgets(){
+		return $this->_em->getRepository('WidgetEntity')->findAll();
+	}
+
+	public function getWidgetByDirectoryName($directory)
 	{
-		return $this->_db->query("SELECT * FROM widgets")->fetchall(PDO::FETCH_ASSOC);
+		$widget = $this->_em->getRepository('WidgetEntity')->findOneBy(array('directory' => $directory));
+		return $widget;
 	}
 
-	public function getWidget($carpeta)
-	{
-		$mod = $this->_db->query("SELECT * FROM widgets WHERE carpeta = '$carpeta'");
-		return $mod->fetch();
-	}
-
-	public function getIdWidget($carpeta)
-	{
-		$mod = $this->_db->query("SELECT idwidget FROM widgets WHERE carpeta = '$carpeta'");
-		return $mod->fetch();
-	}
-
-	public function agregarWidget($nombre, $carpeta, $descripcion, $autor, $version){
-		$this->_db->query("INSERT INTO widgets (nombre,carpeta,descripcion,autor,version) VALUES ('$nombre', '$carpeta', '$descripcion', '$autor', '$version')");
-	}
-
-	public function agregarContents($idwidget, array $contents = null){
-		$consulta = "INSERT INTO widgets_content (idwidget, stringid, position) VALUES ";
-		end($contents);
-		$lastElementKey = key($contents);
-		$lastElementKeyString = $contents[$lastElementKey]['stringid'];
-		foreach ($contents as $content) {
-			$consulta .= "('$idwidget', '$content[stringid]', '$content[position]')";
-			if($content['stringid'] !== $lastElementKeyString){
-				$consulta .= ", ";
-			}
+	public function isActivated($directory){
+		$widget = $this->_em->getRepository('WidgetEntity')->findOneBy(array('directory' => $directory));
+		if ($widget) {
+			return true;
+		} else {
+			return false;
 		}
-		$this->_db->query($consulta);
 	}
 
-	public function habilitar($idwidget){
-		$this->_db->query("UPDATE widgets SET habilitado = 1 WHERE idwidget = $idwidget");
+	public function activate($directory){
+		$widget = new WidgetEntity();
+		$widget->setDirectory($directory);
+		$this->_em->persist($widget);
+		$this->_em->flush();
 	}
 
-	public function deshabilitar($idwidget){
-		$this->_db->query("UPDATE widgets SET habilitado = 0 WHERE idwidget = $idwidget");
+	public function disactivate($directory){
+		$widget = $this->_em->getRepository('WidgetEntity')->findOneBy(array('directory' => $directory));
+		$this->_em->remove($widget);
+		$this->_em->flush();
 	}
+
 }
 
 ?>

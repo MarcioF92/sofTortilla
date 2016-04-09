@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.8, created on 2016-03-24 20:13:03
+<?php /* Smarty version Smarty-3.1.8, created on 2016-03-27 20:14:49
          compiled from "D:\Marcio\Programas\xampp_1_8\htdocs\Frameworks\flight_editado\modules\configuracion\views\usuarios\index.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:2362256e8a3bf12af37-44412836%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '62acb0be8db3a54ee613c33223193314692df7c5' => 
     array (
       0 => 'D:\\Marcio\\Programas\\xampp_1_8\\htdocs\\Frameworks\\flight_editado\\modules\\configuracion\\views\\usuarios\\index.tpl',
-      1 => 1458846187,
+      1 => 1459120486,
       2 => 'file',
     ),
   ),
@@ -30,7 +30,9 @@ $_valid = $_smarty_tpl->decodeProperties(array (
         <tr><td>ID</td>
             <td>Usuario</td>
             <td>Role</td>
-            <td></td>
+            <td>Permisos</td>
+            <td>Editar</td>
+            <td>Eliminar</td>
         </tr>
         <?php  $_smarty_tpl->tpl_vars['user'] = new Smarty_Variable; $_smarty_tpl->tpl_vars['user']->_loop = false;
  $_from = $_smarty_tpl->tpl_vars['users']->value; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array');}
@@ -49,6 +51,20 @@ $_smarty_tpl->tpl_vars['user']->_loop = true;
 configuracion/usuarios/permisos/<?php echo $_smarty_tpl->tpl_vars['user']->value->getIduser();?>
 ">
                    Permisos
+                </a>
+            </td>
+            <td>
+                <a href="<?php echo $_smarty_tpl->tpl_vars['_layoutParams']->value['root'];?>
+configuracion/usuarios/edit_user/<?php echo $_smarty_tpl->tpl_vars['user']->value->getIduser();?>
+">
+                   Editar
+                </a>
+            </td>
+            <td>
+                <a href="<?php echo $_smarty_tpl->tpl_vars['_layoutParams']->value['root'];?>
+configuracion/usuarios/delete_user/<?php echo $_smarty_tpl->tpl_vars['user']->value->getIduser();?>
+">
+                   Eliminar
                 </a>
             </td>
         </tr>

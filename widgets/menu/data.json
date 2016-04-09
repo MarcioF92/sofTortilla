@@ -1,21 +1,18 @@
 { 
-	"WidgetDescription": {
-		"information": {
-			"nombre": "Menú",
-			"carpeta": "menu",
-			"autor": "Marcio Fuentes",
-			"descripcion": "El Widget Menu",
-			"version": "1.0"
+	"information": {
+		"name": "Menú",
+		"author": "Marcio Fuentes",
+		"description": "El Widget Menu",
+		"version": "1.0"
+	},
+	"positions": {
+		"top": {
+			"stringid": "top",
+			"position": "top"
 		},
-		"contents": {
-			"top": {
-				"stringid": "top",
-				"position": "top"
-			},
-			"sidebar": {
-				"stringid": "sidebar",
-				"position": "sidebar"
-			}
+		"sidebar": {
+			"stringid": "sidebar",
+			"position": "sidebar"
 		}
 	}
 }

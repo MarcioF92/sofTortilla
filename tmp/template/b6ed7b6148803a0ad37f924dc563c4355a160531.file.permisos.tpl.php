@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.8, created on 2016-03-26 20:03:45
+<?php /* Smarty version Smarty-3.1.8, created on 2016-03-27 17:28:19
          compiled from "D:\Marcio\Programas\xampp_1_8\htdocs\Frameworks\flight_editado\modules\configuracion\views\usuarios\permisos.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:821456f58be3648c77-89460811%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'b6ed7b6148803a0ad37f924dc563c4355a160531' => 
     array (
       0 => 'D:\\Marcio\\Programas\\xampp_1_8\\htdocs\\Frameworks\\flight_editado\\modules\\configuracion\\views\\usuarios\\permisos.tpl',
-      1 => 1459033420,
+      1 => 1459110497,
       2 => 'file',
     ),
   ),

@@ -15,18 +15,15 @@ class menuWidget extends Widget{
 	}
 
 	public function getConfig($menu){
-		$enabled = $this->enabled('menu');
 		$menus['sidebar'] = array(
 			'position' => 'sidebar',
 			'show' => 'all',
 			'hide' => array('registro'),
-			'enabled' => $enabled
 		);
 
 		$menus['top'] = array(
 			'position' => 'top',
 			'show' => 'all',
-			'enabled' => $enabled
 		);
 
 		return $menus[$menu];

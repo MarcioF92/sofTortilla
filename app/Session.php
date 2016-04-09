@@ -6,6 +6,7 @@ class Session
 
 	public static function init(){
 		session_start();
+		//Session::time();
 	}
 
 	public static function destroy($key = false){

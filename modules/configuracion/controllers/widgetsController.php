@@ -4,56 +4,55 @@ class widgetsController extends Controller
 {
 	private $_widgetsModel;
 
-    public function __construct()
-    {
+    public function __construct(){
         parent::__construct();
         $this->_widgetsModel = $this->loadModel('widgets');
+        $this->_acl->access('widgets');
     }
  
-    public function index()
-    {
-
-        $this->_acl->acceso('widgets');
+    public function index(){
 
         $this->_view->assign('titulo', 'Widgets');
+        $widgetFolders = array();
         $widgets = array();
 
         if ($opendir = opendir('widgets')){
-            while (($file = readdir($opendir)) !==FALSE){
-                   $widgets[] = $file;
+            while (($file = readdir($opendir)) !== FALSE){
+                   $widgetFolders[] = $file;
             }
         }
 
-        foreach ($widgets as $w) {
-            $w = (String) $w;
-            if($w != '.' && $w != '..'){
-                $row = $this->_widgetsModel->getWidget($w);
-                if (!$row) {
-                    $json = file_get_contents(BASE_URL . 'widgets/' . $w .'/data.json');
-                    $array = json_decode($json,true);
-                    $data = $array['WidgetDescription'];
-                    if($data['information']['nombre'] & $data['information']['carpeta'] & $data['information']['descripcion'] & $data['information']['autor'] & $data['information']['version']){
-                        $this->_widgetsModel->agregarWidget($data['information']['nombre'], $data['information']['carpeta'], $data['information']['descripcion'], $data['information']['autor'], $data['information']['version']);
-                        $idwidget = $this->_widgetsModel->getIdWidget($data['information']['carpeta']);
-                        $contents = $data['contents'];
-                        $this->_widgetsModel->agregarContents($idwidget['idwidget'], $contents);
-                    }
+        foreach ($widgetFolders as $widget) {
+            $widget = (String) $widget;
+            if($widget != '.' && $widget != '..'){
+                if (file_exists(ROOT . DS . 'widgets' . DS . $widget . DS . 'data.json')) {
+                    $json = file_get_contents(BASE_URL . 'widgets/' . $widget .'/data.json');
+                    $arrayWidget = json_decode($json, true);
+                    $arrayWidget['activated'] = $this->_widgetsModel->isActivated($widget);
+                    $arrayWidget['directory'] = $widget;
+                    $widgets[$widget] = $arrayWidget;
                 }
             }
         }
 
-        $this->_view->assign('wids', $this->_widgetsModel->getWidgets());
+        $this->_view->assign('widgetList', $widgets);
         $this->_view->render('index', 'widgets'); //Renderiza y manda el nombre de la vista
     }
 
-    public function habilitar($idwidget){
-    	$this->_widgetsModel->habilitar($idwidget);
-    	$this->redireccionar('configuracion/widgets');
+    public function activate($directory = false){
+        if (!$directory) {
+            $this->redirect('configuracion/widgets');
+        }
+    	$this->_widgetsModel->activate($directory);
+    	$this->redirect('configuracion/widgets');
     }
 
-    public function deshabilitar($idwidget){
-    	$this->_widgetsModel->deshabilitar($idwidget);
-    	$this->redireccionar('configuracion/widgets');
+    public function disactivate($directory = false){
+        if (!$directory) {
+            $this->redirect('configuracion/widgets');
+        }
+    	$this->_widgetsModel->disactivate($directory);
+        $this->redirect('configuracion/widgets');
     }
 
 }
